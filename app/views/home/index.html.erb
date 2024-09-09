@@ -245,3 +245,44 @@
 
   </div>
 </section>
+
+<section id="faq" aria-labelledby="faq-title" className="relative overflow-hidden bg-slate-50 py-20 sm:py-32">
+
+  <div class="relative mx-auto px-4 sm:px-6 lg:px-8" style="background-image: url('<%= asset_path('background-faqs.jpg') %>');">
+    <div class="container mx-auto lg:max-w-7xl">
+      <h2 id="faq-title" class="pt-32 font-display text-3xl tracking-tight text-slate-900 sm:text-4xl"
+      >
+        Frequently asked questions
+      </h2>
+      <p class="mt-4 text-lg tracking-tight text-slate-700">
+        If you can't find what you're looking for, email our support team
+        and if you're lucky someone will get back to you.
+      </p>
+
+      <dl class=" container mt-10 space-y-6 divide-y divide-gray-900/10">
+        <% @faqs.each do |faq| %>
+          <div class="pt-6">
+            <dt>
+              <button class="flex w-full items-start justify-between text-left text-gray-900" data-action="click->disclosure#toggle">
+                <span class="text-base font-semibold leading-7"><%= faq[:question] %></span>
+                <span class="ml-6 flex h-7 items-center">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6" data-disclosure-target="plusIcon">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                  </svg>
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 hidden" data-disclosure-target="minusIcon">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14" />
+                  </svg>
+                </span>
+              </button>
+            </dt>
+            <dd class="mt-2 pr-12 hidden" data-disclosure-target="content">
+              <p class="text-base leading-7 text-gray-600"><%= faq[:answer]%></p>
+            </dd>
+          </div>
+        <% end %>
+      </dl>
+    </div>
+    
+    
+  </div>
+</section>
