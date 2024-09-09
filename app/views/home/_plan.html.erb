@@ -1,0 +1,32 @@
+<section class="flex flex-col rounded-3xl px-6 sm:px-8 <%= featured ? 'order-first bg-blue-600 py-8 lg:order-none' : 'lg:py-8' %>">
+  <h3 class="mt-5 font-display text-lg text-white"><%= name %></h3>
+  <p class="mt-2 text-base <%= featured ? 'text-white' : 'text-gray-600' %>">
+    <%= description %>
+  </p>
+  <p class="order-first font-display text-5xl font-light tracking-tight text-white">
+    <%= price %>
+    <span class="text-base ml-2">ONE TIME</span>
+  </p>
+  <ul role="list" class="order-last mt-10 flex flex-col gap-y-3 text-sm <%= featured ? 'text-white' : 'text-gray-500' %>">
+    <% features.each do |feature| %>
+      <li class="flex">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" width="24" height="24" stroke-width="1.5" stroke="currentColor" class="size-6 <%= featured ? 'text-white' : 'text-gray-400' %>">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+        </svg>
+        <span class="ml-4"><%= feature %></span>
+      </li>
+    <% end %>
+    <% xfeatures.each do |xfeature| %>
+      <li class="flex">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" width="24" height="24" stroke-width="1.5" stroke="currentColor" class="size-6 <%= featured ? 'text-white' : 'text-gray-400' %>">
+          <path stroke-linecap="round" stroke-linejoin="round" d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+        </svg>
+        <span class="ml-4"><%= xfeature %></span>
+      </li>
+    <% end %>
+  </ul>
+  <%= form_tag "#", method: :post do %>
+    <%= hidden_field_tag :price_id, price_id %>
+    <%= submit_tag "Get Started", class: "mt-8 w-full rounded-full #{featured ? 'bg-white text-gray-900 hover:bg-gray-200' : 'bg-gray-900 text-white border border-gray-700 hover:border-gray-600'} px-3 py-3 text-sm font-semibold" %>
+  <% end %>
+</section>

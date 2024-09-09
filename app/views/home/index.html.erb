@@ -197,4 +197,51 @@
       🎁 All plans are currently 30% off for the first 50 customers 
     </p>
   </div>
+   <div class="container mt-16 grid grid-cols-1 gap-y-10 sm:mx-auto lg:-mx-8 lg:max-w-7xl lg:grid-cols-3 xl:mx-auto xl:gap-x-8">
+   
+        <%= render 'plan', name: "Starter", price: "$129", price_id: ENV['STARTER_PRICE'],
+          description: "Good for the individual who is self-employed and just getting started.",
+          features: [
+            'Up to 50 approved reviews',
+            '10 keyword tracked bi-weekly',
+            'Supports Instagram',
+            'Email Alerts',
+          ],
+          xfeatures: [
+            'Supports Youtube',
+            'Basic Reviews Tracking',
+            'Supports Tiktok',
+          ],
+          featured: false %>
+      
+      <%= render 'plan', name: "Launch", price: "$199", price_id: ENV['LAUNCH_PRICE'],
+          description: "Perfect for startups, small, and medium sized businesses.",
+          features: [
+            'Up to 200 approved reviews',
+            '50 keywords tracked weekly',
+            'Supports Instagram',
+            'Email Alerts',
+            'Supports Youtube',
+            'Basic Reviews Tracking',
+          ],
+          xfeatures: [
+            'Supports Tiktok',
+          ],
+          featured: true %>
+      
+      <%= render 'plan', name: "Grow", price: "$249", price_id: ENV['GROW_PRICE'],
+          description: "For even the biggest enterprise companies.",
+          features: [
+            'Up to 400 approved reviews',
+            '100 keywords tracked daily',
+            'Supports Instagram',
+            'Email Alerts',
+            'Supports Youtube',
+            'Advanced Reviews Tracking',
+            'Supports Tiktok'
+          ],
+          xfeatures: [],
+          featured: false %>
+
+  </div>
 </section>
