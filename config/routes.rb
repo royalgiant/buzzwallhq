@@ -8,4 +8,9 @@ Rails.application.routes.draw do
     get :terms
     get :privacy
   end
+
+  namespace :purchase do
+    resources :checkouts
+    get "success", to: "checkouts#success"
+  end
 end

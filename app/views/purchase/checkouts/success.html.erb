@@ -1,0 +1,12 @@
+<div class="container">
+  <div class="row justify-content-center">
+      <h2 class="custom-h2 my-2">
+        <% if @customer.present? %>
+          Thanks for subscribing, <%= @customer.name %>!
+        <% else %>
+          Thanks for your purchase, access will be sent to your email <%= @session&.customer_details&.email %>!
+        <% end %>
+      </h2>
+      <%= link_to "Continue", root_url, class: "w-64 p-2 text-white text-center bg-blue-600 rounded hover:bg-blue-700" %>
+  </div>
+</div>

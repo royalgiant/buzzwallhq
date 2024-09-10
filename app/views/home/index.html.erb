@@ -214,6 +214,7 @@
             'Basic Reviews Tracking',
             'Supports Tiktok',
           ],
+          product: :starter_price,
           featured: false %>
       
       <%= render 'plan', name: "Launch", price: "$199", price_id: ENV['LAUNCH_PRICE'],
@@ -229,10 +230,11 @@
           xfeatures: [
             'Supports Tiktok',
           ],
+          product: :launch_price,
           featured: true %>
       
       <%= render 'plan', name: "Grow", price: "$249", price_id: ENV['GROW_PRICE'],
-          description: "For even the biggest enterprise companies.",
+          description: "For even the biggest enterprise companies with multiple products and services.",
           features: [
             'Up to 400 approved reviews',
             '100 keywords tracked daily',
@@ -243,6 +245,7 @@
             'Supports Tiktok'
           ],
           xfeatures: [],
+          product: :growth_price,
           featured: false %>
 
   </div>
