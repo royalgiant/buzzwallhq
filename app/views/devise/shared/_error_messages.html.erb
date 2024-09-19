@@ -1,0 +1,22 @@
+<% if resource.errors.any? %>
+  <div class="alert alert-danger mt-2" role="alert">
+    <div id="error_explanation" data-turbo-cache="false">
+      <h5 class="custom-h5">
+        <%= I18n.t("errors.messages.not_saved",
+                   count: resource.errors.count,
+                   resource: resource.class.model_name.human.downcase)
+         %>
+      </h5>
+      <ul style="list-style-type: none;">
+        <% resource.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+<% end %>
+<% if flash[:captcha].present? %>
+  <div class="alert alert-danger mt-2">
+    <strong><%= flash[:captcha] %></strong>
+  </div>
+<% end %>

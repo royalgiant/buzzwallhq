@@ -63,6 +63,19 @@ Rails.application.configure do
   # config.active_job.queue_name_prefix = "BuzzwallHQ_production"
 
   config.action_mailer.perform_caching = false
+  config.action_mailer.perform_deliveries = true
+
+  config.action_mailer.default_url_options = { host: Rails.application.credentials[Rails.env.to_sym][:mailgun][:MG_MAIL_HOST], protocol: 'https' }
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+    user_name:      Rails.application.credentials[Rails.env.to_sym][:mailgun][:MG_USERNAME],
+    password:       Rails.application.credentials[Rails.env.to_sym][:mailgun][:MG_PASSWORD],
+    domain:         Rails.application.credentials[Rails.env.to_sym][:mailgun][:MG_MAIL_HOST],
+    address:       'smtp.mailgun.org',
+    port:          '587',
+    authentication: :plain,
+    enable_starttls_auto: true
+  }
 
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.

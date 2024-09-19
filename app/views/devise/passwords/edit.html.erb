@@ -1,0 +1,23 @@
+<div class="container">
+  <div class="row justify-content-center">
+    <h2 class="custom-h2 my-2">Change your password</h2>
+
+    <%= form_for(resource, as: resource_name, url: password_path(resource_name), data: { turbolinks: false }, html: { method: :put }) do |f| %>
+      <%= render "devise/shared/error_messages", resource: resource %>
+      <%= f.hidden_field :reset_password_token %>
+
+      <div class="col-6 mx-auto mb-2">
+        <%= f.password_field :password, placeholder: "New Password", autofocus: true, autocomplete: "new-password", class: "w-full p-3 border border-gray-300 rounded" %>
+      </div>
+
+      <div class="col-6 mx-auto mb-2">
+        <%= f.password_field :password_confirmation, placeholder: "Confirm new Password", autofocus: true, autocomplete: "new-password", class: "w-full p-3 border border-gray-300 rounded" %>
+      </div>
+
+      <div class="col-6 mx-auto mb-2">
+        <%= f.submit "Change my password", class: "w-full p-3 text-white bg-blue-600 rounded hover:bg-blue-700" %>
+      </div>
+      <%= render "devise/shared/links" %>
+    <% end %>
+  </div>
+</div>
