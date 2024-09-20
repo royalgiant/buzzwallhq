@@ -1,6 +1,6 @@
-<div class="container">
+<div class="container mx-auto">
   <div class="row justify-content-center">
-    <h2 class="custom-h2 my-2">Resend confirmation instructions</h2>
+    <h2 class="text-5xl text-center mt-5">Resend confirmation instructions</h2>
     <%= form_for(resource, as: resource_name, url: user_confirmation_path(resource_name), data: { turbolinks: false }, html: { method: :post }) do |f| %>
       <%= render "devise/shared/error_messages", resource: resource %>
 
