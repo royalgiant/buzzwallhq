@@ -5,6 +5,8 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable, :confirmable,
          :omniauthable, omniauth_providers: [:google_oauth2]
 
+  attr_accessor :skip_validation
+
   validates_presence_of :first_name, unless: :skip_validation
   validates_presence_of :last_name, unless: :skip_validation
 
