@@ -21,8 +21,9 @@ Rails.application.configure do
     config.action_controller.enable_fragment_cache_logging = true
 
     config.cache_store = :memory_store
+    config.public_file_server.enabled = true
     config.public_file_server.headers = {
-      'Cache-Control' => "public, max-age=#{2.days.to_i}"
+      "Cache-Control" => "public, max-age=#{2.days.to_i}"
     }
   else
     config.action_controller.perform_caching = false
@@ -32,6 +33,21 @@ Rails.application.configure do
 
   # Store uploaded files on the local file system (see config/storage.yml for options).
   config.active_storage.service = :local
+
+  config.action_mailer.perform_caching = false
+  config.action_mailer.perform_deliveries = true
+  config.action_mailer.raise_delivery_errors = true
+  config.action_mailer.default_url_options = { host: Rails.application.credentials[Rails.env.to_sym][:mailgun][:MG_MAIL_HOST], protocol: 'http' }
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+    user_name:      Rails.application.credentials[Rails.env.to_sym][:mailgun][:MG_USERNAME],
+    password:       Rails.application.credentials[Rails.env.to_sym][:mailgun][:MG_PASSWORD],
+    domain:         Rails.application.credentials[Rails.env.to_sym][:mailgun][:MG_MAIL_HOST],
+    address:       'smtp.mailgun.org',
+    port:          '587',
+    authentication: :plain,
+    enable_starttls_auto: true
+  }
 
   # Don't care if the mailer can't send.
   config.action_mailer.raise_delivery_errors = false
@@ -60,6 +76,9 @@ Rails.application.configure do
 
   # Suppress logger output for asset requests.
   config.assets.quiet = true
+
+  # Ngrok config hosts
+  config.hosts << "engaged-dane-accepted.ngrok-free.app"
 
   # Raises error for missing translations.
   # config.i18n.raise_on_missing_translations = true
