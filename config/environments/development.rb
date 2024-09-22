@@ -44,7 +44,7 @@ Rails.application.configure do
     password:       Rails.application.credentials[Rails.env.to_sym][:mailgun][:MG_PASSWORD],
     domain:         Rails.application.credentials[Rails.env.to_sym][:mailgun][:MG_MAIL_HOST],
     address:       'smtp.mailgun.org',
-    port:          '587',
+    port:          587,
     authentication: :plain,
     enable_starttls_auto: true
   }
