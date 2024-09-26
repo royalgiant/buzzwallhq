@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_09_26_021451) do
+ActiveRecord::Schema[7.0].define(version: 2024_09_26_143124) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -21,6 +21,20 @@ ActiveRecord::Schema[7.0].define(version: 2024_09_26_021451) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_buzz_terms_on_user_id"
+  end
+
+  create_table "buzzs", force: :cascade do |t|
+    t.string "url", null: false
+    t.bigint "wall_id"
+    t.string "thumbnail_url", null: false
+    t.bigint "user_id", null: false
+    t.boolean "approved"
+    t.bigint "buzz_term_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["buzz_term_id"], name: "index_buzzs_on_buzz_term_id"
+    t.index ["user_id"], name: "index_buzzs_on_user_id"
+    t.index ["wall_id"], name: "index_buzzs_on_wall_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -47,5 +61,22 @@ ActiveRecord::Schema[7.0].define(version: 2024_09_26_021451) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  create_table "walls", force: :cascade do |t|
+    t.string "name", null: false
+    t.bigint "user_id", null: false
+    t.bigint "buzz_term_id"
+    t.string "iframe_url"
+    t.boolean "published", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["buzz_term_id"], name: "index_walls_on_buzz_term_id"
+    t.index ["user_id"], name: "index_walls_on_user_id"
+  end
+
   add_foreign_key "buzz_terms", "users"
+  add_foreign_key "buzzs", "buzz_terms"
+  add_foreign_key "buzzs", "users"
+  add_foreign_key "buzzs", "walls"
+  add_foreign_key "walls", "buzz_terms"
+  add_foreign_key "walls", "users"
 end
