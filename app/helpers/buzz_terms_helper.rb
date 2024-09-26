@@ -1,0 +1,2 @@
+module BuzzTermsHelper
+end
