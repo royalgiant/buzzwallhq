@@ -3,7 +3,11 @@ class BuzzTermsController < ApplicationController
 
   # GET /buzz_terms or /buzz_terms.json
   def index
-    @buzz_terms = current_user.buzz_terms
+    if current_user.nil?
+      redirect_to home_index_path
+    else
+      @buzz_terms = current_user.buzz_terms
+    end
   end
 
   # GET /buzz_terms/1 or /buzz_terms/1.json
