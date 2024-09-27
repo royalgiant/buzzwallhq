@@ -3,7 +3,7 @@ class BuzzTermsController < ApplicationController
 
   # GET /buzz_terms or /buzz_terms.json
   def index
-    @buzz_terms = BuzzTerm.all
+    @buzz_terms = current_user.buzz_terms
   end
 
   # GET /buzz_terms/1 or /buzz_terms/1.json
@@ -21,15 +21,13 @@ class BuzzTermsController < ApplicationController
 
   # POST /buzz_terms or /buzz_terms.json
   def create
-    @buzz_term = BuzzTerm.new(buzz_term_params)
+    @buzz_term = BuzzTerm.new(buzz_term_params.merge({user_id: current_user.id, frequency_check: "daily"}))
 
     respond_to do |format|
       if @buzz_term.save
-        format.html { redirect_to buzz_term_url(@buzz_term), notice: "Buzz term was successfully created." }
-        format.json { render :show, status: :created, location: @buzz_term }
+        format.html { redirect_to edit_buzz_term_url(@buzz_term), notice: "Buzz term was successfully created." }
       else
         format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @buzz_term.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -38,11 +36,9 @@ class BuzzTermsController < ApplicationController
   def update
     respond_to do |format|
       if @buzz_term.update(buzz_term_params)
-        format.html { redirect_to buzz_term_url(@buzz_term), notice: "Buzz term was successfully updated." }
-        format.json { render :show, status: :ok, location: @buzz_term }
+        format.html { redirect_to buzz_terms_url, notice: "Buzz term was successfully updated." }
       else
         format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @buzz_term.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -53,7 +49,6 @@ class BuzzTermsController < ApplicationController
 
     respond_to do |format|
       format.html { redirect_to buzz_terms_url, notice: "Buzz term was successfully destroyed." }
-      format.json { head :no_content }
     end
   end
 
