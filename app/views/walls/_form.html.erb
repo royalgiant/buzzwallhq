@@ -12,27 +12,27 @@
   <% end %>
 
   <div class="my-5">
-    <%= form.label :name %>
-    <%= form.text_field :name, class: "block shadow rounded-md border border-gray-400 outline-none px-3 py-2 mt-2 w-full" %>
+    <%= form.label :name, class: "text-sm font-medium leading-6 text-gray-900 block" %>
+    <%= form.text_field :name, class: "block w-full rounded-md border border-gray-400 py-2 pl-3 text-gray-900 shadow ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" %>
+  </div>
+
+  <div class="relative">
+    <%= form.label :buzz_term_id, "Buzz Term", class: "text-sm font-medium leading-6 text-gray-900 block" %>
+    <%= form.collection_select :buzz_term_id, @buzz_terms, :id, :term, { prompt: 'Select a Buzz Term' }, class: "block w-full appearance-none rounded-md border border-gray-400 py-2 pl-3 pr-10 text-gray-900 shadow ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" %>
+    <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3 pt-4">
+      <svg class="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+        <path fill-rule="evenodd" d="M10 17a1 1 0 01-.707-.293l-5-5a1 1 0 011.414-1.414L10 14.586l4.293-4.293a1 1 0 011.414 1.414l-5 5A1 1 0 0110 17z" clip-rule="evenodd" />
+      </svg>
+    </div>
+</div>
+
+  <div class="my-5">
+    <%= form.label :iframe_url, "IFrame URL", class: "text-sm font-medium leading-6 text-gray-900 block" %>
+    <%= form.text_field :iframe_url, class: "block w-full rounded-md border border-gray-400 py-2 pl-3 text-gray-900 shadow ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" %>
   </div>
 
   <div class="my-5">
-    <%= form.label :user_id %>
-    <%= form.text_field :user_id, class: "block shadow rounded-md border border-gray-400 outline-none px-3 py-2 mt-2 w-full" %>
-  </div>
-
-  <div class="my-5">
-    <%= form.label :buzz_term_id %>
-    <%= form.text_field :buzz_term_id, class: "block shadow rounded-md border border-gray-400 outline-none px-3 py-2 mt-2 w-full" %>
-  </div>
-
-  <div class="my-5">
-    <%= form.label :iframe_url %>
-    <%= form.text_field :iframe_url, class: "block shadow rounded-md border border-gray-400 outline-none px-3 py-2 mt-2 w-full" %>
-  </div>
-
-  <div class="my-5">
-    <%= form.label :published %>
+    <%= form.label :published, class: "text-sm font-medium leading-6 text-gray-900 block" %>
     <%= form.check_box :published, class: "block mt-2 h-5 w-5" %>
   </div>
 
