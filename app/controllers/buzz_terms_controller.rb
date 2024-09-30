@@ -1,4 +1,5 @@
 class BuzzTermsController < ApplicationController
+  include RapidApiClient
   before_action :set_buzz_term, only: %i[ show edit update destroy ]
 
   # GET /buzz_terms or /buzz_terms.json

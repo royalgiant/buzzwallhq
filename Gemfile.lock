@@ -124,6 +124,7 @@ GEM
     domain_name (0.6.20240107)
     erubi (1.13.0)
     event_stream_parser (1.0.0)
+    excon (0.111.0)
     factory_bot (6.4.6)
       activesupport (>= 5.0.0)
     factory_bot_rails (6.4.3)
@@ -428,6 +429,7 @@ DEPENDENCIES
   database_cleaner-active_record
   debug
   devise
+  excon
   factory_bot_rails
   faker
   faraday

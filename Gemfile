@@ -100,6 +100,9 @@ gem 'concurrent-ruby', require: 'concurrent'
 # Mailgun
 gem 'mailgun-ruby', '~>1.2.14'
 
+# HTTP(s) API Client
+gem 'excon'
+
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[ mri mingw x64_mingw ]
