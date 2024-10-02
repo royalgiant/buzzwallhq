@@ -17,7 +17,7 @@
 #   runner "AnotherModel.prune_old_records"
 # end
 # 
-every 1.day, at: '5:00 am' do
+every 1.day, at: '9:00 pm' do
   runner "BuzzTerm.run_daily_jobs"
 end
 

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_09_26_143124) do
+ActiveRecord::Schema[7.0].define(version: 2024_10_02_013430) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -32,6 +32,13 @@ ActiveRecord::Schema[7.0].define(version: 2024_09_26_143124) do
     t.bigint "buzz_term_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "video_id"
+    t.string "title"
+    t.integer "play_count"
+    t.integer "comment_count"
+    t.integer "share_count"
+    t.datetime "create_time"
+    t.json "author"
     t.index ["buzz_term_id"], name: "index_buzzs_on_buzz_term_id"
     t.index ["user_id"], name: "index_buzzs_on_user_id"
     t.index ["wall_id"], name: "index_buzzs_on_wall_id"
