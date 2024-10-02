@@ -1,5 +1,6 @@
+# lib/rapid_api_client.rb
 module RapidApiClient
-  def request_tiktok_api(url)
+  def self.request_tiktok_api(url)
     response = Excon.get(
       url,
       headers: {
@@ -11,7 +12,7 @@ module RapidApiClient
     JSON.parse(response.body)
   end
 
-  def find_tiktok_video(term)
+  def self.find_tiktok_video(term)
     request_tiktok_api(
       "https://#{Rails.application.credentials[Rails.env.to_sym].dig(:rapidapi, :tiktok_url_host)}/feed/search?keywords=#{term}&region=us&count=10&cursor=0&publish_time=0&sort_type=0"
     )

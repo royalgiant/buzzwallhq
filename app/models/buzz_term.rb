@@ -7,22 +7,4 @@ class BuzzTerm < ApplicationRecord
 
   validates :term, presence: true
   validates :frequency_check, inclusion: { in: FREQUENCY_OPTIONS }
-
-  def self.run_daily_jobs
-    where(frequency_check: 'daily').find_each do |buzz_term|
-      FindTiktokVideoJob.perform_later(buzz_term)
-    end
-  end
-
-  def self.run_weekly_jobs
-    where(frequency_check: 'weekly').find_each do |buzz_term|
-      FindTiktokVideoJob.perform_later(buzz_term)
-    end
-  end
-
-  def self.run_biweekly_jobs
-    where(frequency_check: 'biweekly').find_each do |buzz_term|
-      FindTiktokVideoJob.perform_later(buzz_term)
-    end
-  end
 end

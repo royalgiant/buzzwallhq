@@ -17,16 +17,16 @@
 #   runner "AnotherModel.prune_old_records"
 # end
 # 
-every 1.day, at: '9:00 pm' do
-  runner "BuzzTerm.run_daily_jobs"
+every 1.day, at: '5:30 am' do
+  # runner "FindTiktokBuzzes.find_tiktok_buzzes_daily", :environment => 'development'
 end
 
 # every :sunday, at: '5:00 am' do
-#   runner "BuzzTerm.run_weekly_jobs"
+#   runner "BuzzTerm.find_tiktok_buzzes_weekly"
 # end
 
 # every '0 0 1,15 * *' do
-#   runner "BuzzTerm.run_biweekly_jobs"
+#   runner "BuzzTerm.find_tiktok_buzzes_biweekly"
 # end
 
 # Learn more: http://github.com/javan/whenever

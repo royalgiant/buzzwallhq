@@ -1,3 +1,2 @@
 sidekiq: bundle exec sidekiq -c 2
 queue: redis-server
-css: bin/rails tailwindcss:watch
