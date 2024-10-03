@@ -6,7 +6,8 @@ class FindTiktokBuzzesWorker
   
   def perform(buzz_term_id)
     buzz_term = BuzzTerm.find(buzz_term_id)
-    results = RapidApiClient.find_tiktok_video(buzz_term.term)
+    frequency = buzz_term.get_tiktok_publish_time
+    results = RapidApiClient.find_tiktok_video(buzz_term.term, frequency)
     data = results["data"]["videos"]
     data.each do |video_data|
       buzz = Buzz.find_or_create_by(video_id: video_data["video_id"], user_id: buzz_term.user_id) do |buzz|
