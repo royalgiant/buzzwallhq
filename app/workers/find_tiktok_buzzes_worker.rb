@@ -13,7 +13,7 @@ class FindTiktokBuzzesWorker
       buzz = Buzz.find_or_create_by(video_id: video_data["video_id"], user_id: buzz_term.user_id) do |buzz|
         buzz.title = video_data["title"]
         buzz.thumbnail_url = video_data["ai_dynamic_cover"]
-        buzz.url = video_data["wmplay"]
+        buzz.url = "https://www.tiktok.com/embed/#{video_data['video_id']}"
         buzz.play_count = video_data["play_count"]
         buzz.comment_count = video_data["comment_count"]
         buzz.share_count = video_data["share_count"]
