@@ -11,6 +11,7 @@ class User < ApplicationRecord
   validates_presence_of :last_name, unless: :skip_validation
 
   has_many :buzz_terms, dependent: :destroy
+  has_many :walls, dependent: :destroy
 
   def self.from_omniauth(auth)
     where(provider: auth.provider, uid: auth.uid).first_or_create do |user|

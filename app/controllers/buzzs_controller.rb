@@ -6,6 +6,7 @@ class BuzzsController < ApplicationController
       redirect_to home_index_path
     else
       @buzz_terms = current_user.buzz_terms.includes(:buzzs)
+      @walls = current_user.walls
     end
   end
 
