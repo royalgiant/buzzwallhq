@@ -23,10 +23,12 @@ class BuzzsController < ApplicationController
 
   # DELETE /buzzs/1 or /buzzs/1.json
   def destroy
-    @buzz.destroy
+    @buzz = Buzz.find(params[:id])
+    # @buzz.destroy
 
     respond_to do |format|
-      format.json { head :no_content }
+      format.turbo_stream { render turbo_stream: turbo_stream.remove("buzz-#{@buzz.id}") }
+      format.html { redirect_to buzzs_url, notice: 'Buzz was successfully destroyed.' }
     end
   end
 
