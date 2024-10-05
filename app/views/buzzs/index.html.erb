@@ -15,7 +15,7 @@
 
               <div class="my  -6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
                 <% buzz_term.buzzs.sort_by(&:create_time).reverse.each do |buzz| %>
-                  <%= turbo_frame_tag dom_id(buzz) do %>
+                  <%= turbo_frame_tag "buzz-#{buzz.id}" do %>
                     <div class="group relative">
                       <div class="relative" style="padding-bottom: 250%;">
                         <iframe src="https://www.tiktok.com/embed/<%= buzz.video_id%>" allowfullscreen scrolling="no" allow="encrypted-media;" class="absolute top-0 left-0 w-full h-full object-cover object-center"></iframe>
