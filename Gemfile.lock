@@ -348,6 +348,7 @@ GEM
       sprockets (> 3.0)
       sprockets-rails
       tilt
+    select2-rails (4.0.13)
     selenium-webdriver (4.10.0)
       rexml (~> 3.2, >= 3.2.5)
       rubyzip (>= 1.2.2, < 3.0)
@@ -460,6 +461,7 @@ DEPENDENCIES
   ruby-openai
   ruby-vips (~> 2.1, >= 2.1.4)
   sass-rails (~> 6)
+  select2-rails
   selenium-webdriver
   shoulda-context (~> 1.2, >= 1.2.2)
   sidekiq (~> 7.0.9)
