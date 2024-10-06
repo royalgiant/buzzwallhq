@@ -1,7 +1,7 @@
 class BuzzTerm < ApplicationRecord
   belongs_to :user
   has_many :walls, dependent: :destroy
-  has_many :buzzs, dependent: :destroy
+  has_many :buzzes, dependent: :destroy
 
   FREQUENCY_OPTIONS = %w[daily weekly biweekly monthly never].freeze
 

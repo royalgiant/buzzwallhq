@@ -1,11 +1,11 @@
-class BuzzsController < ApplicationController
+class BuzzesController < ApplicationController
   before_action :set_buzz, only: %i[ show edit update destroy ]
 
   def index
     if current_user.nil?
       redirect_to home_index_path
     else
-      @buzz_terms = current_user.buzz_terms.includes(:buzzs)
+      @buzz_terms = current_user.buzz_terms.includes(:buzzes)
       @walls = current_user.walls
     end
   end
@@ -28,7 +28,7 @@ class BuzzsController < ApplicationController
 
     respond_to do |format|
       format.turbo_stream { render turbo_stream: turbo_stream.remove("buzz-#{@buzz.id}") }
-      format.html { redirect_to buzzs_url, notice: 'Buzz was successfully destroyed.' }
+      format.html { redirect_to buzzes_url, notice: 'Buzz was successfully destroyed.' }
     end
   end
 

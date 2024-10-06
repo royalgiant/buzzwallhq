@@ -20,7 +20,7 @@ Rails.application.routes.draw do
   resources :home, only: [:index]
   resources :buzz_terms
   resources :walls
-  resources :buzzs, only: [:index, :update, :destroy]
+  resources :buzzes, only: [:index, :update, :destroy]
 
   scope controller: :static do
     get :terms
