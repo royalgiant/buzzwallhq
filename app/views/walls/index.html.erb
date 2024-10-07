@@ -44,7 +44,7 @@
             <% @walls.each do |wall| %>
               <tr>
                 <td class="whitespace-normal py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0">
-                  <%= wall.name %>
+                  <%= link_to wall.name, wall_path(wall) %>
                 </td>
                 <td class="whitespace-normal px-3 py-4 text-sm text-gray-500">
                   <%= wall.buzz_term.term.titleize %>
