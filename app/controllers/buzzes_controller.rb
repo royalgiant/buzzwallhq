@@ -14,9 +14,9 @@ class BuzzesController < ApplicationController
   def update
     respond_to do |format|
       if @buzz.update(buzz_params)
-        format.json { render :show, status: :ok, location: @buzz }
+        format.turbo_stream { render turbo_stream: turbo_stream.remove("buzz-#{@buzz.id}") }
       else
-        format.json { render json: @buzz.errors, status: :unprocessable_entity }
+        format.turbo_stream { render json: @buzz.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -40,6 +40,6 @@ class BuzzesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def buzz_params
-      params.require(:buzz).permit(:url, :wall_id, :thumbnail_url, :user_id, :approved, :buzz_term_id)
+      params.require(:buzz).permit(:url, :wall_id, :thumbnail_url, :user_id, :approved, :buzz_term_id, wall_ids: [])
     end
 end

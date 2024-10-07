@@ -1,5 +1,5 @@
 class Buzz < ApplicationRecord
   belongs_to :user
   belongs_to :buzz_term
-  has_and_belongs_to_many :walls
+  has_and_belongs_to_many :walls, join_table: :buzzes_walls
 end
