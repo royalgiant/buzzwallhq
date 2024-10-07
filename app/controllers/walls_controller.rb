@@ -3,11 +3,12 @@ class WallsController < ApplicationController
   before_action :set_buzz_terms, only: %i[ new edit ]
 
   def index
-    @walls = Wall.includes(:buzz_term).all
+    @walls = current_user.walls.includes(:buzz_term)
   end
 
   def show
     @buzzes = @wall.buzzes
+    @walls = current_user&.walls
   end
 
   def new
