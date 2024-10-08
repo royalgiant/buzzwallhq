@@ -1,6 +1,8 @@
 class WallsController < ApplicationController
+  before_action :authenticate_user!, only: %i[ index new edit create update destroy ]
   before_action :set_wall, only: %i[ show edit update destroy ]
   before_action :set_buzz_terms, only: %i[ new edit ]
+  before_action -> { authorize_user!(@wall) }, only: %i[ update destroy]
 
   def index
     @walls = current_user.walls.includes(:buzz_term)

@@ -1,5 +1,7 @@
 class BuzzesController < ApplicationController
-  before_action :set_buzz, only: %i[ show edit update destroy ]
+  before_action :authenticate_user!, only: %i[ update destroy ]
+  before_action :set_buzz, only: %i[ update destroy ]
+  before_action -> { authorize_user!(@buzz) }, only: %i[ update destroy]
 
   def index
     if current_user.nil?

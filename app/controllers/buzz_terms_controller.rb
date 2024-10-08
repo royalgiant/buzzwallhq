@@ -1,6 +1,8 @@
 class BuzzTermsController < ApplicationController
   include RapidApiClient
+  before_action :authenticate_user!, only: %i[ show new edit create update destroy ]
   before_action :set_buzz_term, only: %i[ show edit update destroy ]
+  before_action -> { authorize_user!(@buzz_term) }, only: %i[ show edit update destroy]
 
   # GET /buzz_terms or /buzz_terms.json
   def index
