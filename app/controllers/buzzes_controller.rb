@@ -7,7 +7,12 @@ class BuzzesController < ApplicationController
     if current_user.nil?
       redirect_to home_index_path
     else
-      @buzz_terms = current_user.buzz_terms.includes(:buzzes)
+      @reviewed = params[:reviewed] == 'true'
+      if @reviewed
+        @buzz_terms = current_user.buzz_terms.includes(buzzes: :walls).where.not(buzzes: { walls: { id: nil } })
+      else
+        @buzz_terms = current_user.buzz_terms.includes(buzzes: :walls).where(buzzes: { walls: { id: nil } })
+      end
       @walls = current_user.walls
     end
   end

@@ -6,7 +6,7 @@
       <%= turbo_frame_tag "buzz-#{buzz.id}" do %>
         <div class="group relative">
           <div class="relative" style="padding-bottom: 250%;">
-            <iframe src="https://www.tiktok.com/embed/<%= buzz.video_id %>" allowfullscreen scrolling="no" allow="encrypted-media;" class="absolute top-0 left-0 w-full h-full object-cover object-center"></iframe>
+            <iframe src="https://www.tiktok.com/embed/<%= buzz.video_id %>" allowfullscreen scrolling="no" allow="encrypted-media;" class="absolute top-0 left-0 w-full h-full object-cover object-center" loading="lazy"></iframe>
           </div>
           <div class="mt-4 flex justify-between">
             <div class="flex items-center space-x-1">
