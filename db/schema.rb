@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_10_06_213739) do
+ActiveRecord::Schema[7.0].define(version: 2024_10_11_024410) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -83,14 +83,16 @@ ActiveRecord::Schema[7.0].define(version: 2024_10_06_213739) do
     t.boolean "published", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "embed_token"
     t.index ["buzz_term_id"], name: "index_walls_on_buzz_term_id"
+    t.index ["embed_token"], name: "index_walls_on_embed_token", unique: true
     t.index ["user_id"], name: "index_walls_on_user_id"
   end
 
   add_foreign_key "buzz_terms", "users"
   add_foreign_key "buzzes", "buzz_terms"
   add_foreign_key "buzzes", "users"
-  add_foreign_key "buzzes_walls", "buzzes", column: "buzz_id"
+  add_foreign_key "buzzes_walls", "buzzes"
   add_foreign_key "buzzes_walls", "walls"
   add_foreign_key "walls", "buzz_terms"
   add_foreign_key "walls", "users"

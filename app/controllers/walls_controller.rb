@@ -52,7 +52,11 @@ class WallsController < ApplicationController
 
   private
     def set_wall
-      @wall = Wall.find(params[:id])
+      @wall = if params[:id]
+                Wall.find(params[:id])
+              elsif params[:embed_token]
+                Wall.find_by(embed_token: params[:embed_token])
+              end
     end
 
     def set_buzz_terms

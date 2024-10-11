@@ -20,6 +20,7 @@ Rails.application.routes.draw do
   resources :home, only: [:index]
   resources :buzz_terms
   resources :walls
+  get 'walls/embed/:embed_token', to: 'walls#show', as: 'embed_wall'
   resources :buzzes, only: [:index, :update, :destroy]
 
   scope controller: :static do

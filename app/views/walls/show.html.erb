@@ -1,6 +1,12 @@
 <div class="container mx-auto mt-5">
   <h2 class="text-4xl font-bold tracking-tight text-gray-900 text-center"><%= @wall.name %></h2>
 
+  <div class="mt-4 text-center">
+    <h3 class="text-2xl font-semibold">Embed this Wall</h3>
+    <p class="mt-2 text-gray-600">Copy the code below to embed this wall on your own website:</p>
+    <input type="text" class="block w-full rounded-md border border-gray-400 py-2 pl-3 text-gray-900 shadow ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" value='<iframe src="<%= embed_wall_url(@wall.embed_token) %>" width="600" height="400" frameborder="0" allowfullscreen></iframe>' readonly>
+  </div>
+
   <div class="my-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
     <% @buzzes.sort_by(&:create_time).reverse.each do |buzz| %>
       <%= turbo_frame_tag "buzz-#{buzz.id}" do %>

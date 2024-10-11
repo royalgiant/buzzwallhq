@@ -24,11 +24,11 @@
         <path fill-rule="evenodd" d="M10 17a1 1 0 01-.707-.293l-5-5a1 1 0 011.414-1.414L10 14.586l4.293-4.293a1 1 0 011.414 1.414l-5 5A1 1 0 0110 17z" clip-rule="evenodd" />
       </svg>
     </div>
-</div>
+  </div>
 
   <div class="my-5">
     <%= form.label :iframe_url, "IFrame URL", class: "text-sm font-medium leading-6 text-gray-900 block" %>
-    <%= form.text_field :iframe_url, class: "block w-full rounded-md border border-gray-400 py-2 pl-3 text-gray-900 shadow ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" %>
+    <input type="text" class="block w-full rounded-md border border-gray-400 py-2 pl-3 text-gray-900 shadow ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" value='<iframe src="<%= embed_wall_url(@wall.embed_token) %>" width="600" height="400" frameborder="0" allowfullscreen></iframe>' readonly>
   </div>
 
   <div class="my-5">
