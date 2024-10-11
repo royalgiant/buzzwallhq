@@ -9,6 +9,7 @@ class WallsController < ApplicationController
   end
 
   def show
+    response.headers['Content-Security-Policy'] = "frame-ancestors 'self' *"
     @buzzes = @wall.buzzes
     @walls = current_user&.walls
   end
