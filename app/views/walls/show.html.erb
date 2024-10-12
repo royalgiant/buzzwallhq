@@ -9,6 +9,10 @@
     </div>
   <% end %>
 
-  <%= render partial: '4_column_show_grid' %>
+  <% if @is_subscriber %>
+    <%= render partial: '4_column_show_grid' %>
+  <% else %>
+    <%= render partial: '3_column_show_grid' %>
+  <% end %>
 </div>
       

@@ -10,6 +10,7 @@ class WallsController < ApplicationController
 
   def show
     response.headers['Content-Security-Policy'] = "frame-ancestors 'self' *"
+    @is_subscriber = @wall.user&.role.present?
     @buzzes = @wall.buzzes
     @walls = current_user&.walls
   end
