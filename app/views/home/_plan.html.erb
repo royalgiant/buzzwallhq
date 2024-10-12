@@ -5,7 +5,9 @@
   </p>
   <p class="order-first font-display text-5xl font-light tracking-tight text-white">
     <%= price %>
-    <span class="text-base ml-2">ONE TIME</span>
+    <% if product != "FREE" %>
+      <span class="text-base ml-2">ONE TIME</span>
+    <% end %>
   </p>
   <ul role="list" class="order-last mt-10 flex flex-col gap-y-3 text-sm <%= featured ? 'text-white' : 'text-gray-500' %>">
     <% features.each do |feature| %>
@@ -25,19 +27,27 @@
       </li>
     <% end %>
   </ul>
-  <%= form_tag purchase_checkouts_path,  method: :post, data: { turbo: false } do %>
-    <input type="hidden" name="mode" value="checkout" />
-    <input type="hidden" name="price_id" value="<%= Rails.application.credentials[Rails.env.to_sym].dig(:stripe, :pricing, product) %>" />
-    <div class="mt-10">
-      <%= submit_tag "Get Started", data: { disable_with: "Hold please..." }, class: "cursor-pointer mt-8 w-full rounded-full #{featured ? 'bg-white text-gray-900 hover:bg-gray-200' : 'bg-gray-900 text-white border border-gray-700 hover:border-gray-600'} px-3 py-3 text-sm font-semibold" %>
-    </div>
-    <div class="mt-6 text-center">
-      <div class="group inline-flex text-base font-medium">
-        <svg class="mr-2 h-6 w-6 flex-shrink-0 text-gray-400" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" />
-        </svg>
-        <span class="text-gray-500">Free Lifetime Updates Guaranteed</span>
+  <% if product == "FREE" %>
+    <%= form_tag new_user_registration_path, method: :get do %>
+      <div class="mt-10">
+        <%= link_to 'Get Started', new_user_registration_path, class: "cursor-pointer mt-8 w-full rounded-full #{featured ? 'bg-white text-gray-900 hover:bg-gray-200' : 'bg-gray-900 text-white border border-gray-700 hover:border-gray-600'} px-3 py-3 text-sm font-semibold text-center inline-block", style: "display: inline-block; text-align: center;" %>
       </div>
+    <% end %>
+  <% else %>
+    <%= form_tag purchase_checkouts_path,  method: :post, data: { turbo: false } do %>
+      <input type="hidden" name="mode" value="checkout" />
+      <input type="hidden" name="price_id" value="<%= Rails.application.credentials[Rails.env.to_sym].dig(:stripe, :pricing, product) %>" />
+      <div class="mt-10">
+        <%= submit_tag "Get Started", data: { disable_with: "Hold please..." }, class: "cursor-pointer mt-8 w-full rounded-full #{featured ? 'bg-white text-gray-900 hover:bg-gray-200' : 'bg-gray-900 text-white border border-gray-700 hover:border-gray-600'} px-3 py-3 text-sm font-semibold" %>
+      </div>
+    <% end %>
+  <% end %>
+  <div class="mt-6 text-center">
+    <div class="group inline-flex text-base font-medium">
+      <svg class="mr-2 h-6 w-6 flex-shrink-0 text-gray-400" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" />
+      </svg>
+      <span class="text-gray-500">Free Lifetime Updates Guaranteed</span>
     </div>
-<% end %>
+  </div>
 </section>

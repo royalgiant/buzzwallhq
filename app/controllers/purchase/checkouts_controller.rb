@@ -40,7 +40,7 @@ class Purchase::CheckoutsController < ApplicationController
 
   def success
     @session = Stripe::Checkout::Session.retrieve(params[:session_id])
-    if (@session.amount_total == 9700 || @session.amount_total == 12700 || @session.amount_total == 157)
+    if (@session.amount_total == 12900 || @session.amount_total == 19900 || @session.amount_total == 24900)
       user = User.find_by(email: @session.customer_email)
       user.update(role: User::LIFETIME)
     end
