@@ -47,9 +47,9 @@
     <div class="mt-12 lg:mt-auto flex flex-col items-center">
       <div class="flex -space-x-2 justify-center mt-6">
         <% [
-          { src: "https://pbs.twimg.com/profile_images/1794410258237911040/DNxHMI49_400x400.jpg", alt: "Paul" },
+          { src: "https://pbs.twimg.com/profile_images/1843755108556779520/T2w_SdMh_400x400.jpg", alt: "Paul" },
           { src: "https://pbs.twimg.com/profile_images/1690996881940230144/XpA1kaNz_400x400.jpg", alt: "Vijay" },
-          { src: "https://pbs.twimg.com/profile_images/1829459901925515264/WxuMIU2q_400x400.jpg", alt: "Alireza" },
+          { src: "https://pbs.twimg.com/profile_images/1844444318062477317/cs2sxwcj_400x400.jpg", alt: "Alireza" },
           { src: "https://pbs.twimg.com/profile_images/1710124473062772736/zIuqVwMr_400x400.jpg", alt: "Abishek" },
           { src: "https://pbs.twimg.com/profile_images/1490075268928655364/L-PTx3nW_400x400.jpg", alt: "Peter" }
         ].each do |image| %>
@@ -199,20 +199,40 @@
       🎁 All plans are currently 30% off for the first 50 customers 
     </p>
   </div>
-   <div class="container mt-16 grid grid-cols-1 gap-y-10 sm:mx-auto lg:-mx-8 lg:max-w-7xl lg:grid-cols-3 xl:mx-auto xl:gap-x-8">
+   <div class="container mt-16 grid grid-cols-1 gap-y-10 sm:mx-auto lg:-mx-8 lg:max-w-7xl lg:grid-cols-4 xl:mx-auto xl:gap-x-8">
    
-        <%= render 'plan', name: "Starter", price: "$129", price_id: ENV['STARTER_PRICE'],
-          description: "Good for the individual who is self-employed and just getting started.",
+        <%= render 'plan', name: "FREE FOREVER", price: "FREE", price_id: ENV['STARTER_PRICE'],
+          description: "For those who want to try out BuzzwallHQ before committing.",
           features: [
-            'Up to 50 approved reviews',
-            '10 keyword tracked bi-weekly',
-            'Supports Instagram',
+            '1 Buzz Wall',
+            '9 Approved Reviews',
+            'BuzzwallHQ branded wall',
+            '2 keyword tracked bi-weekly',
+            'Supports Tiktok',
             'Email Alerts',
           ],
           xfeatures: [
-            'Supports Youtube',
+            'Supports Instagram',
             'Basic Reviews Tracking',
+            'Supports Youtube',
+          ],
+          product: :starter_price,
+          featured: false %>
+
+        <%= render 'plan', name: "Starter", price: "$129", price_id: ENV['STARTER_PRICE'],
+          description: "For the individual who is just getting started.",
+          features: [
+            'Unlimited Buzz Walls',
+            'Unlimited Approved Reviews',
+            'No BuzzwallHQ branding',
+            '10 keyword tracked bi-weekly',
             'Supports Tiktok',
+            'Email Alerts',
+          ],
+          xfeatures: [
+            'Supports Instagram',
+            'Basic Reviews Tracking',
+            'Supports Youtube',
           ],
           product: :starter_price,
           featured: false %>
@@ -220,29 +240,33 @@
       <%= render 'plan', name: "Launch", price: "$199", price_id: ENV['LAUNCH_PRICE'],
           description: "Perfect for startups, small, and medium sized businesses.",
           features: [
-            'Up to 200 approved reviews',
+            'Unlimited Buzz Walls',
+            'Unlimited Approved Reviews',
+            'No BuzzwallHQ branding',
             '50 keywords tracked weekly',
-            'Supports Instagram',
+            'Supports Tiktok',
             'Email Alerts',
-            'Supports Youtube',
+            'Supports Instagram',
             'Basic Reviews Tracking',
           ],
           xfeatures: [
-            'Supports Tiktok',
+            'Supports Youtube',
           ],
           product: :launch_price,
           featured: true %>
       
       <%= render 'plan', name: "Grow", price: "$249", price_id: ENV['GROW_PRICE'],
-          description: "For even the biggest enterprise companies with multiple products and services.",
+          description: "For the biggest companies with multiple products and services.",
           features: [
-            'Up to 400 approved reviews',
+            'Unlimited Buzz Walls',
+            'Unlimited Approved Reviews',
+            'No BuzzwallHQ branding',
             '100 keywords tracked daily',
-            'Supports Instagram',
+            'Supports Tiktok',
             'Email Alerts',
-            'Supports Youtube',
+            'Supports Instagram',
             'Advanced Reviews Tracking',
-            'Supports Tiktok'
+            'Supports Youtube',
           ],
           xfeatures: [],
           product: :growth_price,

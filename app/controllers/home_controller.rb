@@ -4,21 +4,11 @@ class HomeController < ApplicationController
       {
         question: 'Do you have a free trial?',
         answer:
-          'At the moment, we are in closed-beta and do not offer a free trial. This is intentional to ensure we can build & test with our early adopters and fine tune the product to our highest internal standards. As we scale the product to larger audiences, we plan to introduce a free trial.',
+          'Yes, we have a free forever plan that allows you to try out the basic features.',
       },
       {
         question: 'Do you offer refunds?',
         answer: "Absolutely! We offer a 30 days full refund, from the time you get access, if you're not satisfied with the product. No questions asked!",
-      },
-      {
-        question: 'What happens if I max out my reviews?',
-        answer:
-          'We provide "credit packs" to top up your review count so that BuzzwallHQ can continue finding reviews for you.',
-      },
-      {
-        question: 'Do credit packs expire?',
-        answer:
-          'Nope. Never.',
       },
       {
         question: 'Are there really no subscriptions?',
@@ -31,10 +21,15 @@ class HomeController < ApplicationController
           'Once you add your keywords, BuzzwallHQ will start scanning to get the most recent reviews for those keywords. Typically you sill start seeing leads flow in within the first 48 hours.',
       },
       {
+        question: "What's a 'Wall'?",
+        answer:
+          'A wall is where you showcase all your approved reviews. Each wall has an embed link that you can use to showcase your reviews on your website.',
+      },
+      {
         question:
           'Can you explain the "X approved reviews"?',
         answer:
-          'We find your reviews for the given keywords. The ones you approve will be counted towards your approved reviews and stored in your account. Each approval deducts from your maximum approved reviews. Once you max it out, you can buy credit packs to "top up" your account with more approved reviews.',
+          'We find your reviews for the given keywords. The ones you approve will be counted towards your approved reviews and stored in your account. Each approval deducts from your maximum approved reviews.',
       },
       {
         question: 'What are keywords tracked?',
