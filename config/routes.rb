@@ -22,6 +22,7 @@ Rails.application.routes.draw do
   resources :walls
   get 'walls/embed/:embed_token', to: 'walls#show', as: 'embed_wall'
   resources :buzzes, only: [:index, :update, :destroy]
+  get 'pricing', to: 'pricing#index', as: 'pricing'
 
   scope controller: :static do
     get :terms

@@ -1,0 +1,55 @@
+
+<div class="container mt-16 grid grid-cols-1 gap-y-10 sm:mx-auto lg:-mx-8 lg:max-w-7xl lg:grid-cols-3 xl:mx-auto xl:gap-x-8">
+  <%= render 'home/plan', name: "Starter", price: "$129", price_id: ENV['STARTER_PRICE'],
+      description: "For the individual who is just getting started with their side hustle.",
+      features: [
+        'Unlimited Buzz Walls',
+        'Unlimited Approved Reviews',
+        'No BuzzwallHQ branding',
+        '10 keyword tracked bi-weekly',
+        'Supports Tiktok',
+        'Email Alerts',
+      ],
+      xfeatures: [
+        'Supports Instagram',
+        'Basic Reviews Tracking',
+        'Supports Youtube',
+      ],
+      product: :starter_price,
+      featured: false %>
+  
+  <%= render 'home/plan', name: "Launch", price: "$199", price_id: ENV['LAUNCH_PRICE'],
+      description: "Perfect for startups, small, and medium sized businesses.",
+      features: [
+        'Unlimited Buzz Walls',
+        'Unlimited Approved Reviews',
+        'No BuzzwallHQ branding',
+        '50 keywords tracked weekly',
+        'Supports Tiktok',
+        'Email Alerts',
+        'Supports Instagram',
+        'Basic Reviews Tracking',
+      ],
+      xfeatures: [
+        'Supports Youtube',
+      ],
+      product: :launch_price,
+      featured: true %>
+  
+  <%= render 'home/plan', name: "Grow", price: "$249", price_id: ENV['GROW_PRICE'],
+      description: "For the biggest companies with multiple products and services.",
+      features: [
+        'Unlimited Buzz Walls',
+        'Unlimited Approved Reviews',
+        'No BuzzwallHQ branding',
+        '100 keywords tracked daily',
+        'Supports Tiktok',
+        'Email Alerts',
+        'Supports Instagram',
+        'Advanced Reviews Tracking',
+        'Supports Youtube',
+      ],
+      xfeatures: [],
+      product: :growth_price,
+      featured: false %>
+</div>
