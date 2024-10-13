@@ -24,7 +24,9 @@
               <%= link_to "Buzzes", buzzes_path, class: "text-gray-300 hover:text-white rounded-md px-3 py-2 text-sm font-medium #{'text-white rounded-md px-3 py-2 text-sm font-medium' if current_page?(buzzes_path)}" %>
               <%= link_to "Buzz Terms", buzz_terms_path, class: "text-gray-300 hover:text-white rounded-md px-3 py-2 text-sm font-medium #{'text-white rounded-md px-3 py-2 text-sm font-medium' if current_page?(buzz_terms_path)}" %>
               <%= link_to "Walls", walls_path, class: "text-gray-300 hover:text-white rounded-md px-3 py-2 text-sm font-medium #{'text-white rounded-md px-3 py-2 text-sm font-medium' if current_page?(walls_path)}" %>
-              <%= link_to "Pricing", pricing_path, class: "text-gray-300 hover:text-white rounded-md px-3 py-2 text-sm font-medium #{'text-white rounded-md px-3 py-2 text-sm font-medium' if current_page?(pricing_path)}" %>
+              <% if current_user&.role.nil? %>
+                <%= link_to "Pricing", pricing_path, class: "text-gray-300 hover:text-white rounded-md px-3 py-2 text-sm font-medium #{'text-white rounded-md px-3 py-2 text-sm font-medium' if current_page?(pricing_path)}" %>
+              <% end %>
             </div>
           </div>
         </div>

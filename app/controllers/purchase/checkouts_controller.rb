@@ -41,8 +41,16 @@ class Purchase::CheckoutsController < ApplicationController
   def success
     @session = Stripe::Checkout::Session.retrieve(params[:session_id])
     if (@session.amount_total == 12900 || @session.amount_total == 19900 || @session.amount_total == 24900)
-      user = User.find_by(email: @session.customer_email)
-      user.update(role: User::LIFETIME)
+      user = User.find_or_initialize_by(email: @session.customer_email || @session.customer_details["email"])
+      case @session.amount_total
+      when 12900
+        user.role = User::LIFETIME_STARTER
+      when 19900
+        user.role = User::LIFETIME_LAUNCH
+      when 24900
+        user.role = User::LIFETIME_GROW
+      end
+      user.save(validate: false)
     end
     @customer = Stripe::Customer.retrieve(@session.customer) if @session.customer.present?
   end

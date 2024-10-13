@@ -8,11 +8,11 @@
   
     <% if @customer.present? %>
       Thanks for subscribing, <%= @customer.name %>!
+      <div class="mt-4">
+        <%= link_to "Continue", root_url, class: "w-64 p-2 text-white text-center items-center justify-center bg-blue-600 rounded hover:bg-blue-700 inline-block" %>
+      </div>
     <% else %>
-      Thanks for your purchase, access will be sent to your email <%= @session&.customer_details&.email %>!
+      Thanks for your purchase, if you haven't already set a password visit <%= link_to "here", new_user_password_path, class: "text-blue-500 hover:text-blue-700"%> to reset your password with your email: <%= @session&.customer_details&.email %>! 
     <% end %>
   </h2>
-  <div class="mt-4">
-    <%= link_to "Continue", root_url, class: "w-64 p-2 text-white text-center items-center justify-center bg-blue-600 rounded hover:bg-blue-700 inline-block" %>
-  </div>
 </div>
