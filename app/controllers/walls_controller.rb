@@ -1,7 +1,7 @@
 class WallsController < ApplicationController
   before_action :authenticate_user!, only: %i[ index new edit create update destroy ]
   before_action :set_wall, only: %i[ show edit update destroy ]
-  before_action :set_buzz_terms, only: %i[ new edit ]
+  before_action :set_buzz_terms, only: %i[ new create edit update ]
   before_action -> { authorize_user!(@wall) }, only: %i[ update destroy]
 
   def index
@@ -11,7 +11,11 @@ class WallsController < ApplicationController
   def show
     response.headers['Content-Security-Policy'] = "frame-ancestors 'self' *"
     @is_subscriber = @wall.user&.role.present?
-    @buzzes = @wall.buzzes
+    if !@wall.user&.role.present? && @wall.user.walls.count >= 1
+      @buzzes = @wall.buzzes.order(created_at: :desc).limit(9)
+    else
+      @buzzes = @wall.buzzes
+    end
     @walls = current_user&.walls
   end
 
@@ -26,7 +30,9 @@ class WallsController < ApplicationController
     @wall = Wall.new(wall_params.merge({user_id: current_user.id}))
 
     respond_to do |format|
-      if @wall.save
+      if !current_user&.role.present? && current_user.walls.count >= 1
+        format.html { redirect_to new_wall_path, notice: "Your plan only allows for one wall. If you would like more, please subscribe to a plan!" }
+      elsif @wall.save
         format.html { redirect_to edit_wall_url(@wall), notice: "Wall was successfully created." }
       else
         format.html { render :new, status: :unprocessable_entity }

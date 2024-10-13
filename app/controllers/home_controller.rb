@@ -29,7 +29,7 @@ class HomeController < ApplicationController
         question:
           'Can you explain the "X approved reviews"?',
         answer:
-          'We find your reviews for the given keywords. The ones you approve will be counted towards your approved reviews and stored in your account. Each approval deducts from your maximum approved reviews.',
+          'We find your reviews for the given keywords. The ones you approve will be shown on your wall. Free plans will only show 9 approved reviews at a time per wall; subscribers can show unlimited approved reviews on a wall.',
       },
       {
         question: 'What are keywords tracked?',
