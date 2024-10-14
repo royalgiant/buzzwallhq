@@ -36,7 +36,7 @@
   <% else %>
     <%= form_tag purchase_checkouts_path,  method: :post, data: { turbo: false } do %>
       <input type="hidden" name="mode" value="checkout" />
-      <input type="hidden" name="price_id" value="<%= Rails.application.credentials[Rails.env.to_sym].dig(:stripe, :pricing, product) %>" />
+      <input type="hidden" name="price_id" value="<%= Rails.application.credentials.dig(Rails.env.to_sym, :stripe, :pricing, product) %>" />
       <div class="mt-10">
         <%= submit_tag "Get Started", data: { disable_with: "Hold please..." }, class: "cursor-pointer mt-8 w-full rounded-full #{featured ? 'bg-white text-gray-900 hover:bg-gray-200' : 'bg-gray-900 text-white border border-gray-700 hover:border-gray-600'} px-3 py-3 text-sm font-semibold" %>
       </div>

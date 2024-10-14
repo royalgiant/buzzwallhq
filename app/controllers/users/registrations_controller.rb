@@ -62,7 +62,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   end
 
   def check_captcha
-    return if verify_recaptcha(secret_key: Rails.application.credentials[Rails.env.to_sym].dig(:google, :recaptcha_secret_key_v2))
+    return if verify_recaptcha(secret_key: Rails.application.credentials.dig(Rails.env.to_sym, :google, :recaptcha_secret_key_v2))
     self.resource = resource_class.new sign_up_params
     resource.validate
     set_minimum_password_length
