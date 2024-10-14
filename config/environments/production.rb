@@ -65,19 +65,22 @@ Rails.application.configure do
   config.action_mailer.perform_caching = false
   config.action_mailer.perform_deliveries = true
 
-  config.action_mailer.default_url_options = { host: Rails.application.credentials[Rails.env.to_sym][:mailgun][:MG_MAIL_HOST], protocol: 'https' }
+  config.action_mailer.default_url_options = { 
+    host: Rails.application.credentials.dig(Rails.env.to_sym, :mailgun, :MG_MAIL_HOST), 
+    protocol: 'https' 
+  }
   config.action_mailer.delivery_method = :mailgun
   config.action_mailer.smtp_settings = {
-    user_name:      Rails.application.credentials[Rails.env.to_sym][:mailgun][:MG_USERNAME],
-    password:       Rails.application.credentials[Rails.env.to_sym][:mailgun][:MG_PASSWORD],
-    domain:         Rails.application.credentials[Rails.env.to_sym][:mailgun][:MG_MAIL_HOST],
-    address:       'smtp.mailgun.org',
-    port:          587,
+    user_name: Rails.application.credentials.dig(Rails.env.to_sym, :mailgun, :MG_USERNAME),
+    password: Rails.application.credentials.dig(Rails.env.to_sym, :mailgun, :MG_PASSWORD),
+    domain: Rails.application.credentials.dig(Rails.env.to_sym, :mailgun, :MG_MAIL_HOST),
+    address: 'smtp.mailgun.org',
+    port: 587,
     authentication: :plain,
     enable_starttls_auto: true
   }
   config.action_mailer.mailgun_settings = {
-    api_key: Rails.application.credentials[Rails.env.to_sym][:mailgun][:MG_API_KEY],
+    api_key: Rails.application.credentials.dig(Rails.env.to_sym, :mailgun, :MG_API_KEY),
     domain: 'mg.buzzwallhq.com',
     # api_host: 'api.eu.mailgun.net'  # Uncomment this line for EU region domains
     # timeout: 20 # Default depends on rest-client, whose default is 60s. Added in 1.2.3.

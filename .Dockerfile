@@ -1,31 +1,33 @@
-# Dockerfile
+# # Use an official Ruby runtime as a parent image
+# FROM ruby:3.0.0
 
-# Use the official Ruby image as a base image
-FROM ruby:2.7
+# # Set the working directory to /app
+# WORKDIR /app
 
-# Install dependencies
-RUN apt-get update -qq && apt-get install -y nodejs postgresql-client
+# # Copy the current directory contents into the container at /app
+# COPY . /app
 
-# Set an environment variable to prevent the installation of documentation for gems
-ENV BUNDLE_PATH /gems
+# # Install libvips dependencies
+# RUN apt-get update && \
+#     apt-get install -y libvips libvips-dev && \
+#     apt-get install libglib2.0-dev && \
+#     apt-get install redis-server && \
+#     rm -rf /var/lib/apt/lists/*
 
-# Set the working directory
-WORKDIR /app
+# # Install any needed packages specified in the Gemfile
+# RUN gem install bundler && bundle install
 
-# Copy the Gemfile and Gemfile.lock into the image
-COPY Gemfile Gemfile.lock ./
+# # Run database setup commands
+# RUN bin/dev
+# RUN rails db:create
+# RUN rails db:migrate
+# RUN rails assets:precompile
 
-# Install the gems
-RUN bundle install
+# # Make port 3001 available to the world outside this container
+# EXPOSE 3025
 
-# Copy the rest of the application code into the image
-COPY . ./
+# # Define environment variable for Rails
+# ENV RAILS_ENV=development
 
-# Precompile assets
-RUN bundle exec rake assets:precompile
-
-# Expose port 3000 to the Docker host
-EXPOSE 3000
-
-# Start the Rails server
-CMD ["rails", "server", "-b", "0.0.0.0"]
+# # Run the application
+# CMD ["rails", "server", "-b", "0.0.0.0", "-p", "3025"]
