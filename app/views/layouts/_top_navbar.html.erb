@@ -47,7 +47,7 @@
                 <% if current_user.present? %>
                   <%#= link_to "My Automations", automations_path, class: "block px-4 py-2 text-sm" %>
                   <%#= link_to "My Images", ai_images_path, class: "block px-4 py-2 text-sm" %>
-                  <%#= link_to 'Profile', edit_user_registration_path(current_user), class: 'block px-4 py-2 text-sm' %>
+                  <%= link_to 'Profile', edit_user_registration_path(current_user), class: 'block px-4 py-2 text-sm' %>
                   <%= button_to 'Logout', destroy_user_session_path, method: :delete, data: { turbo: false }, class: "block px-4 py-2 text-sm bg-white" %>
                 <% else %>
                   <%= link_to 'Login', login_path, class: 'block px-4 py-2 text-sm' %>
