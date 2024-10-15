@@ -16,6 +16,7 @@ class User < ApplicationRecord
   LIFETIME_STARTER = "lifetime_starter".freeze
   LIFETIME_LAUNCH = "lifetime_launch".freeze
   LIFETIME_GROW = "lifetime_grow".freeze
+  ADMIN = "admin".freeze
 
   def self.from_omniauth(auth)
     where(provider: auth.provider, uid: auth.uid).first_or_create do |user|

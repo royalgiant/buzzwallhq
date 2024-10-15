@@ -14,9 +14,9 @@ class FindTiktokBuzzes
     end
   end
 
-  def self.find_tiktok_buzzes_biweekly
-    BuzzTerm.where(frequency_check: 'biweekly').find_each do |buzz_term|
-      Rails.logger.info("Buzz Term Bi-Weekly Check ID: #{buzz_term.id}")
+  def self.find_tiktok_buzzes_monthly
+    BuzzTerm.where(frequency_check: 'monthly').find_each do |buzz_term|
+      Rails.logger.info("Buzz Term Monthly Check ID: #{buzz_term.id}")
       FindTiktokBuzzesWorker.perform_async(buzz_term.id)
     end
   end

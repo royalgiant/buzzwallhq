@@ -25,8 +25,8 @@
 #   runner "BuzzTerm.find_tiktok_buzzes_weekly"
 # end
 
-# every '0 0 1,15 * *' do
-#   runner "BuzzTerm.find_tiktok_buzzes_biweekly"
+# every '0 0 1 * *' do
+#   runner "BuzzTerm.find_tiktok_buzzes_monthly"
 # end
 
 # Learn more: http://github.com/javan/whenever
