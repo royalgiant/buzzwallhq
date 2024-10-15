@@ -1,0 +1,13 @@
+# config/schedule.yml
+
+find_tiktok_buzzes_daily:
+  cron: "30 5 * * *" # Every day at 5:30 AM
+  class: FindTiktokBuzzesDailyWorker
+
+find_tiktok_buzzes_weekly:
+  cron: "0 5 * * 0" # Every Sunday at 5:00 AM
+  class: FindTiktokBuzzesWeeklyWorker
+
+find_tiktok_buzzes_biweekly:
+  cron: "0 0 1,15 * *" # On the 1st and 15th of every month at midnight
+  class: FindTiktokBuzzesBiweeklyWorker

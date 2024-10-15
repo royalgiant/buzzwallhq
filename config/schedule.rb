@@ -17,9 +17,9 @@
 #   runner "AnotherModel.prune_old_records"
 # end
 # 
-every 1.day, at: '5:30 am' do
-  # runner "FindTiktokBuzzes.find_tiktok_buzzes_daily", :environment => 'development'
-end
+# every 1.day, at: '5:30 am' do
+#   runner "FindTiktokBuzzes.find_tiktok_buzzes_daily"
+# end
 
 # every :sunday, at: '5:00 am' do
 #   runner "BuzzTerm.find_tiktok_buzzes_weekly"

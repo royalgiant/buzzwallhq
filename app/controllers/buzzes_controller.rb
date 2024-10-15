@@ -20,7 +20,7 @@ class BuzzesController < ApplicationController
   # PATCH/PUT /buzzs/1 or /buzzs/1.json
   def update
     respond_to do |format|
-      if @buzz.update(buzz_params)
+      if @buzz.update(buzz_params.merge(approved: true))
         format.turbo_stream { render turbo_stream: turbo_stream.remove("buzz-#{@buzz.id}") }
       else
         format.turbo_stream { render json: @buzz.errors, status: :unprocessable_entity }
