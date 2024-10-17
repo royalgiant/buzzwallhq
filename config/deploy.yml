@@ -1,0 +1,73 @@
+# config/deploy.yml
+---
+service: buzzwallhq
+image: donaldlee50/buzzwallhq
+servers:
+  web:
+    hosts:
+      - 65.108.85.254
+    options:
+      "add-host": host.docker.internal:host-gateway   
+    labels:
+      traefik.http.routers.buzzwallhq.entrypoints: websecure
+      traefik.http.routers.buzzwallhq.rule: "Host(`buzzwallhq.com`) || Host(`www.buzzwallhq.com`)"
+      traefik.http.routers.buzzwallhq.tls.certresolver: letsencrypt
+      traefik.http.routers.buzzwallhq.tls.domains[0].main: buzzwallhq.com
+      traefik.http.routers.buzzwallhq.tls.domains[0].sans: www.buzzwallhq.com
+  worker:
+    hosts:
+      - 65.108.85.254
+    cmd: bundle exec sidekiq
+registry:
+  username: donaldlee50
+  password:
+  - KAMAL_REGISTRY_PASSWORD
+traefik:
+  options:
+    publish:
+      - "443:443"
+    volume:
+      - "/root/acme.json:/letsencrypt/acme.json"
+  args:
+    entryPoints.web.address: ":80"
+    entryPoints.websecure.address: ":443"
+    entryPoints.web.http.redirections.entryPoint.to: websecure
+    entryPoints.web.http.redirections.entryPoint.scheme: https
+    entryPoints.web.http.redirections.entrypoint.permanent: true
+    certificatesResolvers.letsencrypt.acme.email: "donaldlee50@gmail.com"
+    certificatesResolvers.letsencrypt.acme.storage: "/letsencrypt/acme.json"
+    certificatesResolvers.letsencrypt.acme.httpchallenge: true
+    certificatesResolvers.letsencrypt.acme.httpchallenge.entrypoint: web
+env:
+  clear:
+    DB_HOST: 65.108.85.254
+    POSTGRES_USER: postgres
+    POSTGRES_DB: buzzwallhq_production
+    redis: 65.108.85.254
+  secret:
+  - RAILS_MASTER_KEY
+  - POSTGRES_PASSWORD
+  - REDIS_URL
+ssh:
+  user: root
+accessories:
+  db:
+    image: postgres:16
+    host: 65.108.85.254
+    port: 5432
+    env:
+      clear:
+        POSTGRES_USER: postgres
+        POSTGRES_DB: buzzwallhq_production
+      secret:
+      - POSTGRES_PASSWORD
+    directories:
+    - data:/var/lib/postgresql/data
+  redis:
+    image: redis:7.0
+    roles:
+      - web
+      - worker
+    port: 6379
+    directories:
+    - data:/data

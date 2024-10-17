@@ -4,7 +4,8 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby "3.0.0"
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
-gem "rails", "~> 7.0.4"
+gem "rails", "~> 7.1.4"
+gem 'railties', '~> 7.1.4'
 gem 'faraday'
 gem 'devise' # for user authentication
 gem 'omniauth'
@@ -60,9 +61,6 @@ gem 'rack-cors'
 
 #Rake
 gem 'rake', '~> 13.0', '>= 13.0.6'
-
-#Railties
-gem 'railties', '~> 7.0.3'
 
 # Use Sass to process CSS
 # gem "sassc-rails"

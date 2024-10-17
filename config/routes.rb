@@ -38,4 +38,5 @@ Rails.application.routes.draw do
 
   # For sidekiq dashboard
   mount Sidekiq::Web => '/sidekiq'
+  get "up" => "rails/health#show", as: :rails_health_check
 end
