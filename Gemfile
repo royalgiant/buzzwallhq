@@ -13,6 +13,7 @@ gem 'omniauth-google-oauth2'
 gem 'omniauth-rails_csrf_protection', "~> 1.0"
 gem "recaptcha"
 gem 'select2-rails'
+gem 'kamal'
 
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem "sprockets-rails"
@@ -21,7 +22,7 @@ gem "sprockets-rails"
 gem "pg", "~> 1.1"
 
 # Use the Puma web server [https://github.com/puma/puma]
-gem "puma", "~> 5.0"
+gem "puma", "~> 6.0"
 
 # Use JavaScript with ESM import maps [https://github.com/rails/importmap-rails]
 gem "importmap-rails"
