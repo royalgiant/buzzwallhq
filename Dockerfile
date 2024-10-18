@@ -47,6 +47,10 @@ RUN apt-get update -qq && \
 COPY --from=build /usr/local/bundle /usr/local/bundle
 COPY --from=build /rails /rails
 
+# Copy the docker-entrypoint script
+COPY bin/docker-entrypoint /rails/bin/docker-entrypoint
+RUN chmod +x /rails/bin/docker-entrypoint
+
 # Create necessary directories and set ownership
 RUN mkdir -p db log storage tmp && \
     useradd rails --create-home --shell /bin/bash && \
