@@ -119,7 +119,7 @@ test:
 #
 production:
   <<: *default
-  host: '<%= ENV["DB_HOST"] %>'
+  host: '<%= ENV["POSTGRES_HOST"] %>'
   database: '<%= ENV["POSTGRES_DB"] %>'
   username: '<%= ENV["POSTGRES_USER"] %>'
   password: '<%= ENV["POSTGRES_PASSWORD"] %>'
