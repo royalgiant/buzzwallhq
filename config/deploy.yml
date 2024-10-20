@@ -101,6 +101,24 @@ accessories:
       - config/init.sql:/docker-entrypoint-initdb.d/setup.sql
     directories:
       - data:/var/lib/postgresql/data
+  postgres-backups:
+      image: eeshugerman/postgres-backup-s3:16
+      host: 5.78.94.94
+      env:
+        clear:
+          SCHEDULE: "@daily"
+          BACKUP_KEEP_DAYS: 14
+          S3_REGION: us-east-2
+          S3_BUCKET: buzzwallhq
+          S3_ENDPOINT: https://s3.us-east-2.amazonaws.com
+          S3_PREFIX: postgres-backups 
+          POSTGRES_HOST: 5.78.94.94
+          POSTGRES_USER: "postgres" 
+          POSTGRES_DATABASE: "buzzwallhq_production"
+        secret:
+          - POSTGRES_PASSWORD
+          - S3_ACCESS_KEY_ID
+          - S3_SECRET_ACCESS_KEY
   redis:
     image: redis:7.2
     host: 5.78.94.94
