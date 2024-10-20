@@ -2,9 +2,7 @@
 require 'sidekiq'
 require 'sidekiq-cron'
 
-redis_url = Rails.application.credentials.dig(Rails.env.to_sym, :redis_url) || ENV['REDIS_URL']
-Rails.logger.info("Sidekiq REDIS_URL: #{redis_url}")
-redis_config = Rails.env.development? ? { url: "redis://redis:6379/1" } : { url: redis_url }
+redis_config = Rails.env.development? ? { url: "redis://localhost:6379/1" } : { url: ENV['REDIS_URL'] }
 Rails.logger.info("Sidekiq rails_config: #{redis_config}")
 Sidekiq.configure_server do |config|
   config.redis = redis_config
