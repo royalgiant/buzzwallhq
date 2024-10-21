@@ -20,4 +20,8 @@ class FindTiktokBuzzes
       FindTiktokBuzzesWorker.perform_async(buzz_term.id)
     end
   end
+
+  def self.find_initial_buzzes(buzz_term)
+    FindTiktokBuzzesWorker.perform_async(buzz_term.id)
+  end
 end

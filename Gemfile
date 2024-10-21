@@ -88,7 +88,7 @@ gem 'sitemap_generator'
 
 # Simple, efficient background processing using Redis.
 # https://github.com/sidekiq/sidekiq
-gem "sidekiq", "~> 7.0.9"
+gem "sidekiq", "~> 7.2.2"
 gem "sidekiq-cron", "~> 1.12"
 # Tailwind CSS
 gem "tailwindcss-rails"

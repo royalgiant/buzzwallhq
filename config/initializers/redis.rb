@@ -5,5 +5,5 @@ if Rails.env.production? && ENV['REDIS_URL'].present?
   Redis.current = Redis.new(url: ENV['REDIS_URL'])
 else
   Rails.logger.info("Redis is in development")
-  Redis.current = Redis.new(host: 'localhost', port: 6379, db: 0)
+  REDIS = Redis.new(host: '127.0.0.1', port: 6379, db: 0)
 end
