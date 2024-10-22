@@ -6,6 +6,7 @@ class WallsController < ApplicationController
 
   def index
     @walls = current_user.walls.includes(:buzz_term)
+    @number_of_views = [["> 10,000 views", 10000], ["> 100,000 views", 100000], ["> 1M+ views", 1000000]]
   end
 
   def show

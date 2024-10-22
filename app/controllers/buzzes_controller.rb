@@ -7,11 +7,12 @@ class BuzzesController < ApplicationController
     if current_user.nil?
       redirect_to home_index_path
     else
+      @view_count = params[:views] || 0
       @reviewed = params[:reviewed] == 'true'
       if @reviewed
-        @buzz_terms = current_user.buzz_terms.includes(buzzes: :walls).where.not(buzzes: { walls: { id: nil } })
+        @buzz_terms = current_user.buzz_terms.includes(buzzes: :walls).where.not(buzzes: { walls: { id: nil } }).where('buzzes.play_count >= ?', @view_count)
       else
-        @buzz_terms = current_user.buzz_terms.includes(buzzes: :walls).where(buzzes: { walls: { id: nil } })
+        @buzz_terms = current_user.buzz_terms.includes(buzzes: :walls).where(buzzes: { walls: { id: nil } }).where('buzzes.play_count >= ?', @view_count)
       end
       @walls = current_user.walls
     end

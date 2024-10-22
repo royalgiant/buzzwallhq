@@ -14,7 +14,7 @@ module RapidApiClient
 
   def self.find_tiktok_video(term, frequency)
     request_tiktok_api(
-      "https://#{Rails.application.credentials.dig(Rails.env.to_sym, :rapidapi, :tiktok_url_host)}/feed/search?keywords=#{term}&region=us&count=10&cursor=0&publish_time=#{frequency}&sort_type=3"
+      "https://#{Rails.application.credentials.dig(Rails.env.to_sym, :rapidapi, :tiktok_url_host)}/feed/search?keywords=#{term}&region=us&count=30&cursor=0&publish_time=#{frequency}&sort_type=3"
     )
   end
 end
