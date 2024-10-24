@@ -1,6 +1,7 @@
 require "active_support/core_ext/integer/time"
 
 Rails.application.configure do
+  config.ssl_options = { redirect: { exclude: ->(request) { request.path == "/up" } } }
   config.host_authorization = { exclude: ->(request) { request.path == "/up" } }
   # Settings specified here will take precedence over those in config/application.rb.
 
