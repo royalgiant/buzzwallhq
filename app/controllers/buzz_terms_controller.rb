@@ -91,6 +91,6 @@ class BuzzTermsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def buzz_term_params
-      params.require(:buzz_term).permit(:term, :user_id, :frequency_check)
+      params.require(:buzz_term).permit(:term, :user_id, :frequency_check, :active)
     end
 end

@@ -9,7 +9,7 @@
 
     <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8 mt-6">
       <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
-        Buzz Terms are the terms that you want to track on TikTok. You can add a new term by clicking the "Add Buzz Term" button above. You will find any new buzzes related to your buzz terms on the Buzzes page around 6:00 daily.
+        Buzz Terms are the terms that you want to track on TikTok. You can add a new term by clicking the "Add Buzz Term" button above. You will find any new buzzes related to your <b>ACTIVE</b> buzz terms on the Buzzes page around 6:00 daily.
       </div>
       <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
         <table class="min-w-full divide-y divide-gray-300">
@@ -30,6 +30,11 @@
                   Update Frequency
                 </a>
               </th>
+              <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
+                <a href="#" class="group inline-flex">
+                  Active?
+                </a>
+              </th>
               <th scope="col" class="relative py-3.5 pl-3 pr-0 w-24">
                 <span class="sr-only">Edit</span>
               </th>
@@ -46,6 +51,9 @@
                 </td>
                 <td class="whitespace-normal px-3 py-4 text-sm text-gray-500">
                   <%= buzz_term.frequency_check.titleize %>
+                </td>
+                <td class="whitespace-normal px-3 py-4 text-sm text-gray-500">
+                  <%= boolean_yes_no(buzz_term.active) %>
                 </td>
                 <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm sm:pr-0 w-24">
                   <% if current_user.present? && buzz_term.user_id == current_user.id %>
