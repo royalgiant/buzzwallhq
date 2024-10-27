@@ -7,12 +7,12 @@ class BuzzesController < ApplicationController
     if current_user.nil?
       redirect_to home_index_path
     else
-      @view_count = params[:views] || 0
+      @view_count = params[:views].to_i || 0
       @reviewed = params[:reviewed] == 'true'
       if @reviewed
-        @buzz_terms = current_user.buzz_terms.includes(buzzes: :walls).where.not(buzzes: { walls: { id: nil } }).where('buzzes.play_count >= ?', @view_count)
+        @buzz_terms = current_user.buzz_terms.includes(buzzes: :walls).where.not(buzzes: { walls: { id: nil } }).where(play_count_condition)
       else
-        @buzz_terms = current_user.buzz_terms.includes(buzzes: :walls).where(buzzes: { walls: { id: nil } }).where('buzzes.play_count >= ?', @view_count)
+        @buzz_terms = current_user.buzz_terms.includes(buzzes: :walls).where(buzzes: { walls: { id: nil } }).where(play_count_condition)
       end
       @walls = current_user.walls
     end
@@ -49,5 +49,18 @@ class BuzzesController < ApplicationController
     # Only allow a list of trusted parameters through.
     def buzz_params
       params.require(:buzz).permit(:url, :wall_id, :thumbnail_url, :user_id, :approved, :buzz_term_id, wall_ids: [])
+    end
+
+    def play_count_condition
+      case @view_count
+      when 10000
+        ['buzzes.play_count >= ? AND buzzes.play_count < ?', 10000, 100001]
+      when 100000
+        ['buzzes.play_count >= ? AND buzzes.play_count < ?', 100000, 1000001]
+      when 1000000
+        ['buzzes.play_count >= ?', 1000000]
+      else
+        ['buzzes.play_count >= ?', 0]
+      end
     end
 end
