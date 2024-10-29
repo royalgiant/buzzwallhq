@@ -38,7 +38,11 @@
     <%= render partial: 'layouts/flash_messages' %>
   </div>
 
-  <body>
-    <%= yield %>
+  <body class="h-full">
+    <div class="min-h-screen">
+      <%= yield %>
+    </div>
   </body>
+
+  <%= render partial: 'layouts/footer' %>
 </html>

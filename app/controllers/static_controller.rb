@@ -4,4 +4,7 @@ class StaticController < ApplicationController
 
   def privacy
   end
+
+  def bwhq_how_to
+  end
 end

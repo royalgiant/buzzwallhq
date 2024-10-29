@@ -29,6 +29,7 @@ Rails.application.routes.draw do
   scope controller: :static do
     get :terms
     get :privacy
+    get :bwhq_how_to
   end
 
   namespace :purchase do
