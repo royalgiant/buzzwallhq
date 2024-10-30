@@ -34,7 +34,7 @@ class HomeController < ApplicationController
       {
         question: 'What are keywords tracked?',
         answer:
-        'The # of keywords you can input into BuzzwallHQ to constantly track for new reviews. Each keyword will generate a list of reviews that you can approve or reject.',
+        'The # of keywords you can input into BuzzwallHQ to constantly track for new reviews and viral content. Each keyword will generate a list of reviews and viral content that you can approve, reject, or model.',
       },
       {
         question: "What's the difference between Basic and Advanced Reviews Tracking",
@@ -45,13 +45,7 @@ class HomeController < ApplicationController
           'What is the 30% lifetime discount?',
         answer:
           "We're offering our first 50 customers a 30% lifetime discount off our launch price as a thank you for the early support! You will be grandfathered into these prices forever.",
-      },
-      {
-        question:
-          'Why don\'t I have access immediately?',
-        answer:
-          "In full transparency, we're in closed-beta. The product is still validating while we build out the features. We want to ensure we can provide the best experience for our early adopters and get feedback to improve our offerings. This is the best price you'll ever get for BuzzwallHQ. Lifetime deal will never be offered again.",
-      },
+      }
   ]
   end
 end
