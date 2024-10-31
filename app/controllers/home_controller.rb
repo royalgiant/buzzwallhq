@@ -1,5 +1,6 @@
 class HomeController < ApplicationController
   def index
+    @landing = params[:landing]
     @faqs = [
       {
         question: 'Do you have a free trial?',
@@ -29,7 +30,7 @@ class HomeController < ApplicationController
         question:
           'Can you explain the "X approved reviews"?',
         answer:
-          'We find your reviews for the given keywords. The ones you approve will be shown on your wall. Free plans will only show 9 approved reviews at a time per wall; subscribers can show unlimited approved reviews on a wall.',
+          'We find your reviews/content ideas for the given keywords. The ones you approve will be shown and saved on your wall. Free plans will only show 9 approved reviews/content ideas at a time per wall; subscribers can show unlimited approved reviews/content ideas on a wall.',
       },
       {
         question: 'What are keywords tracked?',
