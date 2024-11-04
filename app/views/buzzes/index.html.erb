@@ -26,7 +26,7 @@
                 <% buzz_term.buzzes.sort_by(&:create_time).reverse.each do |buzz| %>
                   <%= turbo_frame_tag "buzz-#{buzz.id}" do %>
                     <div class="group relative">
-                      <div class="relative" style="padding-bottom: 250%;">
+                      <div class="relative pb-200 md:pb-250">
                         <iframe src="https://www.tiktok.com/embed/<%= buzz.video_id %>" allowfullscreen scrolling="no" allow="encrypted-media;" class="absolute top-0 left-0 w-full h-full object-cover object-center" loading="lazy"></iframe>
                       </div>
                       <div class="mt-4 flex justify-between">
@@ -54,7 +54,7 @@
                           <div class="text-sm font-light py-1 md:py-2">
                             <%= buzz.create_time.strftime("%m/%d/%Y") %>
                           </div>
-                          <div class="flex justify-center pl-1 md:pl-2 w-full sm:items-center">
+                          <div class="flex justify-center pl-1 md:pl-2 w-3/4 sm:items-center">
                             <%= f.select :wall_ids, options_from_collection_for_select(@walls, :id, :name, buzz.wall_ids), {}, { multiple: true, id: "wall_ids-#{buzz.id}", class: "block w-full rounded-md border py-1.5 pl-1 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6" } %>
                           </div>
                           <script>
