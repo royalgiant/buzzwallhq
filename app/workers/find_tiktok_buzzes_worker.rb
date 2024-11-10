@@ -19,6 +19,7 @@ class FindTiktokBuzzesWorker
         buzz.share_count = video_data["share_count"]
         buzz.create_time = Time.at(video_data["create_time"])
         buzz.author = video_data["author"]
+        buzz.full_video_data = video_data
         buzz.buzz_term_id = buzz_term.id
         buzz.approved = false
       end
