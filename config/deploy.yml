@@ -58,8 +58,14 @@ env:
 # Aliases are triggered with "bin/kamal <alias>". You can overwrite arguments on invocation:
 # "bin/kamal logs -r job" will tail logs from the first server in the job section.
 #
-# aliases:
-#   shell: app exec --interactive --reuse "bash"
+aliases:
+  # Typical Rails tasks
+  console: app exec --interactive --reuse "bin/rails console"
+  dbc: app exec --interactive --reuse "bin/rails dbconsole"
+  # Generic tasks
+  shell: app exec --interactive --reuse "bash"
+  logs: app logs -f
+  apps: server exec docker exec kamal-proxy kamal-proxy list
 
 # Use a different ssh user than root
 #
