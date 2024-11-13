@@ -22,6 +22,7 @@ class FindTiktokBuzzes
   end
 
   def self.find_initial_buzzes(buzz_term)
-    FindTiktokBuzzesWorker.perform_async(buzz_term.id, 180)
+    # params: buzz_term.id, frequency, sort_type
+    FindTiktokBuzzesWorker.perform_async(buzz_term.id, 0, 0)
   end
 end

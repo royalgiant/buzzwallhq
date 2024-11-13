@@ -4,10 +4,10 @@ require 'rapid_api_client'
 class FindTiktokBuzzesWorker
   include Sidekiq::Worker
   
-  def perform(buzz_term_id, frequency = nil)
+  def perform(buzz_term_id, frequency = nil, sort_type = 3)
     buzz_term = BuzzTerm.find(buzz_term_id)
     frequency_check = frequency.present? ? frequency : buzz_term.get_tiktok_publish_time
-    results = RapidApiClient.find_tiktok_video(buzz_term.term, frequency_check)
+    results = RapidApiClient.find_tiktok_video(buzz_term.term, frequency_check, sort_type)
     data = results["data"]["videos"]
     data.each do |video_data|
       buzz = Buzz.find_or_create_by(video_id: video_data["video_id"], user_id: buzz_term.user_id) do |buzz|

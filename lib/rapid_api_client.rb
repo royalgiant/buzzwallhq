@@ -12,9 +12,9 @@ module RapidApiClient
     JSON.parse(response.body)
   end
 
-  def self.find_tiktok_video(term, frequency)
+  def self.find_tiktok_video(term, frequency, sort_type)
     request_tiktok_api(
-      "https://#{Rails.application.credentials.dig(Rails.env.to_sym, :rapidapi, :tiktok_url_host)}/feed/search?keywords=#{term}&region=us&count=30&cursor=0&publish_time=#{frequency}&sort_type=3"
+      "https://#{Rails.application.credentials.dig(Rails.env.to_sym, :rapidapi, :tiktok_url_host)}/feed/search?keywords=#{term}&region=us&count=30&cursor=0&publish_time=#{frequency}&sort_type=#{sort_type}"
     )
   end
 end
