@@ -22,13 +22,13 @@
             <div class="mx-auto">
               <h2 class="text-2xl font-bold tracking-tight text-gray-900"><%= buzz_term.term %></h2>
 
-              <div class="my-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-4">
-                <% buzz_term.buzzes.sort_by(&:create_time).reverse.each do |buzz| %>
+              <div class="my-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-4" id="buzzes-<%= buzz_term.id %>">
+                <% buzz_term.buzzes.sort_by(&:create_time).reverse.first(8).each do |buzz| %>
                   <%= turbo_frame_tag "buzz-#{buzz.id}" do %>
                     <div class="group relative">
                       <div class="relative pb-200 md:pb-250">
                         <iframe src="https://www.tiktok.com/embed/<%= buzz.video_id %>" allowfullscreen scrolling="no" allow="encrypted-media;" class="absolute top-0 left-0 w-full h-full object-cover object-center" loading="lazy"></iframe>
-                      </div>
+                      </div> 
                       <div class="mt-4 flex justify-between">
                         <div class="flex items-center space-x-1">
                           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-6 w-6">
@@ -92,6 +92,11 @@
                   <% end %>
                 <% end %>
               </div>
+              <% if buzz_term.buzzes.size > 8 %>
+                <div class="flex justify-center mt-4">
+                  <button class="load-more bg-indigo-600 text-white px-4 py-2 rounded" data-term-id="<%= buzz_term.id %>" data-offset="8">Load More</button>
+                </div>
+              <% end %>
             </div>
           </div>
         <% end %>
@@ -104,6 +109,22 @@
   $(document).ready(function() {
     $('#views_dropdown').change(function() {
       $('#views_form').submit();
+    });
+
+    $('.load-more').click(function() {
+      const button = $(this);
+      const termId = button.data('term-id');
+      const offset = button.data('offset');
+      const reviewed = '<%= @reviewed %>';
+      const container = $(`#buzzes-${termId}`);
+
+      $.get(`/buzzes/load_more`, { term_id: termId, offset: offset, reviewed: reviewed }, function(data) {
+        container.append(data);
+        button.data('offset', offset + 8);
+        if ($.trim(data) === '') {
+          button.remove();
+        }
+      });
     });
   });
 </script>

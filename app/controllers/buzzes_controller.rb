@@ -18,6 +18,18 @@ class BuzzesController < ApplicationController
     end
   end
 
+  def load_more
+    @buzz_term = BuzzTerm.find(params[:term_id])
+    @reviewed = params[:reviewed] == 'true'
+    @buzzes = if @reviewed
+                @buzz_term.buzzes.where(approved: true).order(create_time: :desc).offset(params[:offset]).limit(8)
+              else
+                @buzz_term.buzzes.where(approved: false).order(create_time: :desc).offset(params[:offset]).limit(8)
+              end
+    @walls = current_user.walls
+    render partial: 'buzzes/more_buzzes', locals: { buzzes: @buzzes, walls: @walls }
+  end
+
   # PATCH/PUT /buzzs/1 or /buzzs/1.json
   def update
     respond_to do |format|
