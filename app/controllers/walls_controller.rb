@@ -1,6 +1,6 @@
 class WallsController < ApplicationController
   before_action :authenticate_user!, only: %i[ index new edit create update destroy ]
-  before_action :set_wall, only: %i[ show edit update destroy ]
+  before_action :set_wall, only: %i[ show edit update destroy load_more ]
   before_action :set_buzz_terms, only: %i[ new create edit update ]
   before_action -> { authorize_user!(@wall) }, only: %i[ update destroy]
 
@@ -8,6 +8,13 @@ class WallsController < ApplicationController
     @walls = current_user.walls.includes(:buzz_term)
     @number_of_views = [["> 10,000 views", 10000], ["> 100,000 views", 100000], ["> 1M+ views", 1000000]]
   end
+
+  def load_more
+    @buzzes = @wall.buzzes.order(create_time: :desc).offset(params[:offset]).limit(8)
+    @walls = current_user.walls
+    render partial: 'buzzes/more_buzzes', locals: { buzzes: @buzzes, walls: @walls }
+  end
+
 
   def show
     response.headers['Content-Security-Policy'] = "frame-ancestors 'self' *"

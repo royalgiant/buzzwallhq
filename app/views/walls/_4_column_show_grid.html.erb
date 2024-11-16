@@ -1,70 +1,95 @@
-<div class="my-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4">
-    <% @buzzes.sort_by(&:create_time).reverse.each do |buzz| %>
-      <%= turbo_frame_tag "buzz-#{buzz.id}" do %>
-        <div class="group relative">
-          <div class="relative" style="padding-bottom: 250%;">
-            <iframe src="https://www.tiktok.com/embed/<%= buzz.video_id %>" allowfullscreen scrolling="no" allow="encrypted-media;" class="absolute top-0 left-0 w-full h-full object-cover object-center" loading="lazy"></iframe>
-          </div>
-          <div class="mt-4 flex justify-between">
-            <div class="flex items-center space-x-1">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-6 w-6">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M5.25 5.653c0-.856.917-1.398 1.667-.986l11.54 6.347a1.125 1.125 0 0 1 0 1.972l-11.54 6.347a1.125 1.125 0 0 1-1.667-.986V5.653Z" />
-              </svg>
-              <span class="text-sm"><%= buzz.play_count %></span>
-            </div>
-            <div class="flex items-center space-x-1">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-6 w-6">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M7.5 8.25h9m-9 3H12m-9.75 1.51c0 1.6 1.123 2.994 2.707 3.227 1.129.166 2.27.293 3.423.379.35.026.67.21.865.501L12 21l2.755-4.133a1.14 1.14 0 0 1 .865-.501 48.172 48.172 0 0 0 3.423-.379c1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0 0 12 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018Z" />
-              </svg>
-              <span class="text-sm"><%= buzz.comment_count %></span>
-            </div>
-            <div class="flex items-center space-x-1">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-6 w-6">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M7.217 10.907a2.25 2.25 0 1 0 0 2.186m0-2.186c.18.324.283.696.283 1.093s-.103.77-.283 1.093m0-2.186 9.566-5.314m-9.566 7.5 9.566 5.314m0 0a2.25 2.25 0 1 0 3.935 2.186 2.25 2.25 0 0 0-3.935-2.186Zm0-12.814a2.25 2.25 0 1 0 3.933-2.185 2.25 2.25 0 0 0-3.933 2.185Z" />
-              </svg>
-              <span class="text-sm"><%= buzz.share_count %></span>
-            </div>
-          </div>
-          <% if current_user.present? && buzz.user_id == current_user.id %>
-            <%= form_with model: buzz, url: buzz_path(buzz), method: :put, data: { turbo_frame: "buzz_#{buzz.id}" } do |f| %>
-              <div class="mt-4 flex justify-between items-center">
-                <div class="text-sm font-light">
-                  <%= buzz.create_time.strftime("%m/%d/%Y") %>
-                </div>       
-                <%= f.select :wall_ids, options_from_collection_for_select(@walls, :id, :name, buzz.wall_ids), {}, { multiple: true, id: "wall_ids-#{buzz.id}", class: "block w-full rounded-md border ml-3 py-1.5 pl-1 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6" } %>
-                <script>
-                  $(document).ready(function() {
-                    $("#wall_ids-<%= buzz.id %>").select2({
-                      placeholder: 'Select Walls',
-                      allowClear: true
-                    });
-                  });
-                </script>
-              </div>
-              <div class="mt-3 flex justify-center space-x-2">
-                <div>
-                  <button type="submit" class="h-8 w-8">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="#bbf7d0" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-8 w-8">
-                      <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-                    </svg>
-                  </button>
-                </div>
-                <div>
-                  <%= link_to buzz_path(buzz), 
-                                method: :delete, 
-                                data: { 
-                                  turbo_confirm: "Are you sure? This action is irreversible.",
-                                  turbo_method: :delete
-                                } do %>
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="#fecaca" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-8 w-8">
-                      <path stroke-linecap="round" stroke-linejoin="round" d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-                    </svg>
-                  <% end %>
-                </div>
-              </div>
-            <% end %>
-          <% end %>
+<div class="my-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4" id="wall-<%= @wall.id %>">
+  <% @buzzes.sort_by(&:create_time).reverse.first(8).each do |buzz| %>
+    <%= turbo_frame_tag "buzz-#{buzz.id}" do %>
+      <div class="group relative">
+        <div class="relative" style="padding-bottom: 250%;">
+          <iframe src="https://www.tiktok.com/embed/<%= buzz.video_id %>" allowfullscreen scrolling="no" allow="encrypted-media;" class="absolute top-0 left-0 w-full h-full object-cover object-center" loading="lazy"></iframe>
         </div>
-      <% end %>
+        <div class="mt-4 flex justify-between">
+          <div class="flex items-center space-x-1">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-6 w-6">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M5.25 5.653c0-.856.917-1.398 1.667-.986l11.54 6.347a1.125 1.125 0 0 1 0 1.972l-11.54 6.347a1.125 1.125 0 0 1-1.667-.986V5.653Z" />
+            </svg>
+            <span class="text-sm"><%= buzz.play_count %></span>
+          </div>
+          <div class="flex items-center space-x-1">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-6 w-6">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M7.5 8.25h9m-9 3H12m-9.75 1.51c0 1.6 1.123 2.994 2.707 3.227 1.129.166 2.27.293 3.423.379.35.026.67.21.865.501L12 21l2.755-4.133a1.14 1.14 0 0 1 .865-.501 48.172 48.172 0 0 0 3.423-.379c1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0 0 12 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018Z" />
+            </svg>
+            <span class="text-sm"><%= buzz.comment_count %></span>
+          </div>
+          <div class="flex items-center space-x-1">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-6 w-6">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M7.217 10.907a2.25 2.25 0 1 0 0 2.186m0-2.186c.18.324.283.696.283 1.093s-.103.77-.283 1.093m0-2.186 9.566-5.314m-9.566 7.5 9.566 5.314m0 0a2.25 2.25 0 1 0 3.935 2.186 2.25 2.25 0 0 0-3.935-2.186Zm0-12.814a2.25 2.25 0 1 0 3.933-2.185 2.25 2.25 0 0 0-3.933 2.185Z" />
+            </svg>
+            <span class="text-sm"><%= buzz.share_count %></span>
+          </div>
+        </div>
+        <% if current_user.present? && buzz.user_id == current_user.id %>
+          <%= form_with model: buzz, url: buzz_path(buzz), method: :put, data: { turbo_frame: "buzz_#{buzz.id}" } do |f| %>
+            <div class="mt-4 flex justify-between items-center">
+              <div class="text-sm font-light">
+                <%= buzz.create_time.strftime("%m/%d/%Y") %>
+              </div>       
+              <%= f.select :wall_ids, options_from_collection_for_select(@walls, :id, :name, buzz.wall_ids), {}, { multiple: true, id: "wall_ids-#{buzz.id}", class: "block w-full rounded-md border ml-3 py-1.5 pl-1 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6" } %>
+              <script>
+                $(document).ready(function() {
+                  $("#wall_ids-<%= buzz.id %>").select2({
+                    placeholder: 'Select Walls',
+                    allowClear: true
+                  });
+                });
+              </script>
+            </div>
+            <div class="mt-3 flex justify-center space-x-2">
+              <div>
+                <button type="submit" class="h-8 w-8">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="#bbf7d0" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-8 w-8">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                  </svg>
+                </button>
+              </div>
+              <div>
+                <%= link_to buzz_path(buzz), 
+                              method: :delete, 
+                              data: { 
+                                turbo_confirm: "Are you sure? This action is irreversible.",
+                                turbo_method: :delete
+                              } do %>
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="#fecaca" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-8 w-8">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                  </svg>
+                <% end %>
+              </div>
+            </div>
+          <% end %>
+        <% end %>
+      </div>
     <% end %>
+  <% end %>
+</div>
+<% if @buzzes.size > 8 %>
+  <div class="col-span-1 sm:col-span-2 lg:col-span-4 flex justify-center my-6">
+    <button class="load-more bg-indigo-600 text-white px-4 py-2 rounded" data-wall-id="<%= @wall.id %>" data-offset="8">Load More</button>
   </div>
+<% end %>
+
+
+<script>
+  $(document).ready(function() {
+    $('.load-more').click(function() {
+      const button = $(this);
+      const wallId = button.data('wall-id');
+      const offset = button.data('offset');
+      const container = $(`#wall-${wallId}`);
+
+      $.get("<%= load_more_wall_path(@wall.id) %>", { offset: offset }, function(data) {
+        container.append(data);
+        button.data('offset', offset + 8);
+        if ($.trim(data) === '') {
+          button.remove();
+        }
+      });
+    });
+  });
+</script>

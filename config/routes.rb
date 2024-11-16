@@ -21,7 +21,9 @@ Rails.application.routes.draw do
 
   resources :home, only: [:index]
   resources :buzz_terms
-  resources :walls
+  resources :walls do
+    get 'load_more', on: :member
+  end
   get 'walls/embed/:embed_token', to: 'walls#show', as: 'embed_wall'
   resources :buzzes, only: [:index, :update, :destroy]
   get 'buzzes/load_more', to: 'buzzes#load_more'
