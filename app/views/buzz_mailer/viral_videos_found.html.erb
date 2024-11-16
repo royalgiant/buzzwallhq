@@ -1,0 +1,11 @@
+<h1>Hey <%= @user.first_name %>!</h1>
+<p>
+  We found <%= @play_count_over_1m %> viral videos with over 1M views!
+</p>
+<p>
+  And we also found <%= @play_count_over_100k %> viral videos with over 100,000 views!
+</p>
+<p>
+  Check them out over <%= link_to 'here', buzzes_url %>.
+</p>
+<p>Hope you find some great viral videos to model!</p>

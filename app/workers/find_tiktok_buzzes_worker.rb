@@ -25,5 +25,10 @@ class FindTiktokBuzzesWorker
       end
       Rails.logger.info("New Buzz ID: #{buzz.id}")
     end
+    
+    play_count_over_1m = Buzz.where("play_count > ?", 1_000_000).count
+    play_count_over_100k = Buzz.where("play_count > ? AND play_count < ?", 100_000, 1_000_000).count
+
+    BuzzMailer.with(user_id: buzz_term.user_id, play_count_over_1m: play_count_over_1m, play_count_over_100k: play_count_over_100k).viral_videos_found.deliver_now
   end
 end
