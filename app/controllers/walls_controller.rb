@@ -11,8 +11,8 @@ class WallsController < ApplicationController
 
   def load_more
     @buzzes = @wall.buzzes.order(create_time: :desc).offset(params[:offset]).limit(8)
-    @walls = current_user.walls
-    render partial: 'buzzes/more_buzzes', locals: { buzzes: @buzzes, walls: @walls }
+    @walls = current_user&.walls
+    render partial: 'walls/more_buzzes', locals: { buzzes: @buzzes, walls: @walls }
   end
 
 
