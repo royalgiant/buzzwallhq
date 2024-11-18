@@ -116,9 +116,10 @@
       const termId = button.data('term-id');
       const offset = button.data('offset');
       const reviewed = '<%= @reviewed %>';
+      const view_count = '<%= @view_count %>';
       const container = $(`#buzzes-${termId}`);
 
-      $.get(`/buzzes/load_more`, { term_id: termId, offset: offset, reviewed: reviewed }, function(data) {
+      $.get(`/buzzes/load_more`, { term_id: termId, offset: offset, reviewed: reviewed, views: view_count }, function(data) {
         container.append(data);
         button.data('offset', offset + 8);
         if ($.trim(data) === '') {

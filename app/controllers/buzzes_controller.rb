@@ -21,10 +21,11 @@ class BuzzesController < ApplicationController
   def load_more
     @buzz_term = BuzzTerm.find(params[:term_id])
     @reviewed = params[:reviewed] == 'true'
+    @view_count = params[:views].to_i || 0
     @buzzes = if @reviewed
-                @buzz_term.buzzes.where(approved: true).order(create_time: :desc).offset(params[:offset]).limit(8)
+                @buzz_term.buzzes.where(approved: true).order(create_time: :desc).where(play_count_condition).offset(params[:offset]).limit(8)
               else
-                @buzz_term.buzzes.where(approved: false).order(create_time: :desc).offset(params[:offset]).limit(8)
+                @buzz_term.buzzes.where(approved: false).order(create_time: :desc).where(play_count_condition).offset(params[:offset]).limit(8)
               end
     @walls = current_user.walls
     render partial: 'buzzes/more_buzzes', locals: { buzzes: @buzzes, walls: @walls }
