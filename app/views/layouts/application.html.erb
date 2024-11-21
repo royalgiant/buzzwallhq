@@ -43,6 +43,7 @@
       <%= yield %>
     </div>
   </body>
-
-  <%= render partial: 'layouts/footer' %>
+  <% if current_user.present? %>
+    <%= render partial: 'layouts/footer' %>
+  <% end %>
 </html>
