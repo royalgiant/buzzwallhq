@@ -1,12 +1,48 @@
 <!DOCTYPE html>
 <html>
-<style>
-  #container{width: 1400px; height: 1400px; overflow: hidden;}
-  iframe{width: 1418px; height: 718px;}
-</style>
+<head>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+        #container_iframe {
+            width: 1400px;
+            min-height: 2000px;
+            overflow: hidden;
+        }
+        iframe {
+            width: 1418px;
+            min-height: 2018px;
+            border: none;
+        }
+    </style>
+</head>
 <body>
-  <div id="container">
-    <iframe src="https://buzzwallhq.com/walls/embed/26566606679d379b0342" width="1400" height="720" frameborder="0" allowfullscreen></iframe>
-  </div>
+    <div id="container_iframe">
+        <iframe 
+            id="bwhq-wall-iframe" 
+            src="https://buzzwallhq.com/walls/embed/26566606679d379b0342"
+            scrolling="no"
+            allowfullscreen>
+        </iframe>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/iframe-resizer/4.3.2/iframeResizer.min.js"></script>
+    <script>
+        iFrameResize({
+            log: false,
+            heightCalculationMethod: 'lowestElement',
+            autoResize: true,
+            scrolling: 'auto',
+            onResized: function(messageData) {
+                // Only update height if it's larger than the minimum
+                if (messageData.height > 2018) {
+                    messageData.iframe.style.height = messageData.height + 'px';
+                }
+            }
+        }, '#bwhq-wall-iframe');
+    </script>
 </body>
 </html>
