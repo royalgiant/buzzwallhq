@@ -6,15 +6,36 @@
       <h3 class="text-2xl font-semibold">Embed this Wall</h3>
       <p class="mt-2 text-gray-600">Copy the code below to embed this wall on your own website:</p>
       <textarea rows="9" class="block w-full rounded-md border border-gray-400 py-2 text-gray-900 shadow ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" readonly>
+  <pre style="background-color: white;">
+  <!DOCTYPE html>
+  <html>
+  <head>
     <style>
-      #container_iframe{width: 1400px; height: 1400px; overflow: hidden;}
-      iframe{width: 1418px; height: 718px;}
+      body { margin: 0; padding: 0; }
+      #container_iframe { width: 100%; min-height: 1800px; overflow: hidden; margin: 0 auto; }
+      iframe { width: 100%; min-height: 1818px; border: none; }
     </style>
-    <body>
-      <div id="container_iframe">
-        <iframe id="bwhq-wall-iframe" src="<%= embed_wall_url(@wall.embed_token) %>" width="1400" height="720" frameborder="0"></iframe>
-      </div>
-    </body>
+  </head>
+  <body>
+    <div id="container_iframe">
+      <iframe id="bwhq-wall-iframe" class="iframe" src="<%= embed_wall_url(@wall.embed_token)%>" scrolling="no" style="margin: 0; padding: 0;" allowfullscreen></iframe>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/iframe-resizer/4.3.2/iframeResizer.min.js"></script>
+    <script>
+      iFrameResize({
+        scrolling: 'auto',
+        onResized: function(messageData) {
+          // Only update height if it's larger than the minimum
+          if (messageData.height > 2018) {
+              messageData.iframe.style.height = messageData.height + 'px';
+          }
+        }
+      }, '#bwhq-wall-iframe');
+    </script>
+  </body>
+  </html>
+  </pre>
       </textarea>
     </div>
   <% end %>

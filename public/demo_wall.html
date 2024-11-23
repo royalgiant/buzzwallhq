@@ -1,48 +1,50 @@
+<pre>
 <!DOCTYPE html>
 <html>
 <head>
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-        }
-        #container_iframe {
-            width: 1400px;
-            min-height: 2000px;
-            overflow: hidden;
-        }
-        iframe {
-            width: 1418px;
-            min-height: 2018px;
-            border: none;
-        }
-    </style>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+    }
+    #container_iframe {
+      width: 100%;
+      min-height: 2000px;
+      overflow: hidden;
+      margin: 0 auto;
+    }
+    iframe {
+      width: 100%;
+      min-height: 2018px;
+      border: none;
+    }
+  </style>
 </head>
 <body>
-    <div id="container_iframe">
-        <iframe 
-            id="bwhq-wall-iframe" 
-            src="https://buzzwallhq.com/walls/embed/26566606679d379b0342"
-            scrolling="no"
-            allowfullscreen>
-        </iframe>
-    </div>
+  <div id="container_iframe">
+    <iframe 
+      id="bwhq-wall-iframe"
+      class="iframe"
+      src="https://buzzwallhq.com/walls/embed/26566606679d379b0342"
+      scrolling="no"
+      style="margin: 0; padding: 0;"
+      allowfullscreen>
+    </iframe>
+  </div>
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/iframe-resizer/4.3.2/iframeResizer.min.js"></script>
-    <script>
-        iFrameResize({
-            log: false,
-            heightCalculationMethod: 'lowestElement',
-            autoResize: true,
-            scrolling: 'auto',
-            onResized: function(messageData) {
-                // Only update height if it's larger than the minimum
-                if (messageData.height > 2018) {
-                    messageData.iframe.style.height = messageData.height + 'px';
-                }
-            }
-        }, '#bwhq-wall-iframe');
-    </script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/iframe-resizer/4.3.2/iframeResizer.min.js"></script>
+  <script>
+    iFrameResize({
+      scrolling: 'auto',
+      onResized: function(messageData) {
+        // Only update height if it's larger than the minimum
+        if (messageData.height > 2018) {
+            messageData.iframe.style.height = messageData.height + 'px';
+        }
+      }
+    }, '#bwhq-wall-iframe');
+  </script>
 </body>
 </html>
+</pre>
