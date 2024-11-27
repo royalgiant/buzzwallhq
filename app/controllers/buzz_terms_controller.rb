@@ -76,7 +76,7 @@ class BuzzTermsController < ApplicationController
     when User::LIFETIME_GROW, User::ADMIN
       "daily"
     else
-      "monthly"
+      "weekly"
     end
   end
 
