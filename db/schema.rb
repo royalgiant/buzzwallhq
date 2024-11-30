@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_11_10_165534) do
+ActiveRecord::Schema[7.1].define(version: 2024_11_30_050144) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -51,6 +51,17 @@ ActiveRecord::Schema[7.1].define(version: 2024_11_10_165534) do
     t.index ["buzz_id"], name: "index_buzzes_walls_on_buzz_id"
     t.index ["wall_id", "buzz_id"], name: "index_buzzes_walls_on_wall_id_and_buzz_id"
     t.index ["wall_id"], name: "index_buzzes_walls_on_wall_id"
+  end
+
+  create_table "shopify_stores", force: :cascade do |t|
+    t.string "shop_domain", null: false
+    t.string "access_token"
+    t.string "embed_token"
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["shop_domain"], name: "index_shopify_stores_on_shop_domain", unique: true
+    t.index ["user_id"], name: "index_shopify_stores_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
