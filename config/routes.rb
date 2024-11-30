@@ -40,6 +40,13 @@ Rails.application.routes.draw do
     get "success", to: "checkouts#success"
   end
 
+  # Shopify routes
+  get 'shopify/install', to: 'shopify#install'
+  post 'shopify/install', to: 'shopify#install'
+  get 'shopify/callback', to: 'shopify#callback'
+  get 'shopify/configure', to: 'shopify#configure'
+  patch 'shopify/update', to: 'shopify#update'
+
   # For sidekiq dashboard
   sidekiq_username = Rails.application.credentials.dig(Rails.env.to_sym, :sidekiqweb, :username)
   sidekiq_password = Rails.application.credentials.dig(Rails.env.to_sym, :sidekiqweb, :password)

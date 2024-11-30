@@ -1,0 +1,12 @@
+<div class="container mx-auto px-4 py-8">
+  <h1 class="text-2xl font-bold mb-4">Configure BuzzwallHQ for <%= @store.shop_domain %></h1>
+  
+  <%= form_for @store, url: shopify_update_path do |f| %>
+    <div class="mb-4">
+      <label class="block text-gray-700 mb-2">Select Wall to Display</label>
+      <%= f.select :embed_token, options_from_collection_for_select(@walls, :embed_token, :name, @store.embed_token), {}, class: "w-full p-2 border rounded" %>
+    </div>
+    
+    <%= f.submit "Save Configuration", class: "bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600" %>
+  <% end %>
+</div>

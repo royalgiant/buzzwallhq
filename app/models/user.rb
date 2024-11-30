@@ -12,6 +12,7 @@ class User < ApplicationRecord
 
   has_many :buzz_terms, dependent: :destroy
   has_many :walls, dependent: :destroy
+  has_many :shopify_stores, dependent: :destroy
 
   LIFETIME_STARTER = "lifetime_starter".freeze
   LIFETIME_LAUNCH = "lifetime_launch".freeze
