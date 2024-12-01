@@ -1,4 +1,3 @@
-<pre>
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,13 +8,13 @@
     }
     #container_iframe {
       width: 100%;
-      min-height: 2000px;
+      height: 100vh; /* Use viewport height instead of fixed height */
       overflow: hidden;
       margin: 0 auto;
     }
     iframe {
       width: 100%;
-      min-height: 2018px;
+      height: 100%;  /* Fill the container */
       border: none;
     }
   </style>
@@ -31,20 +30,20 @@
       allowfullscreen>
     </iframe>
   </div>
-
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/iframe-resizer/4.3.2/iframeResizer.min.js"></script>
   <script>
     iFrameResize({
       scrolling: 'auto',
+      heightCalculationMethod: 'lowestElement',
+      sizeWidth: false,
+      autoResize: true,
       onResized: function(messageData) {
-        // Only update height if it's larger than the minimum
-        if (messageData.height > 2018) {
-            messageData.iframe.style.height = messageData.height + 'px';
-        }
+        const container = document.getElementById('container_iframe');
+        container.style.height = messageData.height + 'px';
+        messageData.iframe.style.height = '100%';
       }
     }, '#bwhq-wall-iframe');
   </script>
 </body>
 </html>
-</pre>
