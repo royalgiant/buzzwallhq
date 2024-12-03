@@ -40,6 +40,12 @@ Rails.application.routes.draw do
     get "success", to: "checkouts#success"
   end
 
+  namespace :webhooks do
+    post 'shop_redacted', to: 'compliance#shop_redacted'
+    post 'customer_redacted', to: 'compliance#customer_redacted'
+    post 'data_request', to: 'compliance#data_request'
+  end
+
   # For sidekiq dashboard
   sidekiq_username = Rails.application.credentials.dig(Rails.env.to_sym, :sidekiqweb, :username)
   sidekiq_password = Rails.application.credentials.dig(Rails.env.to_sym, :sidekiqweb, :password)
