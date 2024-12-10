@@ -69,13 +69,18 @@ class Users::RegistrationsController < Devise::RegistrationsController
       Rails.logger.debug "reCAPTCHA response: #{params['g-recaptcha-response']}" 
     end
 
-    return if result
+    if !result
+      self.resource = resource_class.new sign_up_params
+      resource.validate
+      set_minimum_password_length
+      flash[:captcha] = "Please click the captcha to prove you're not a robot!"
+      render :new, status: :unprocessable_entity
 
-    self.resource = resource_class.new sign_up_params
-    resource.validate
-    set_minimum_password_length
-    flash[:captcha] = "Please click the captcha to prove you're not a robot!"
-    render :new, status: :unprocessable_entity
+      # Send email notification
+      UserMailer.captcha_failed_notification(resource.email).deliver_now
+    else
+      return
+    end
   end
 
   # If you have extra params to permit, append them to the sanitizer.
