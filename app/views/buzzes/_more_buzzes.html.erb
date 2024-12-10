@@ -1,8 +1,16 @@
 <% buzzes.each do |buzz| %>
   <%= turbo_frame_tag "buzz-#{buzz.id}" do %>
     <div class="group relative">
-      <div class="relative pb-200 md:pb-250">
-        <iframe src="https://www.tiktok.com/embed/<%= buzz.video_id %>" allowfullscreen scrolling="no" allow="encrypted-media;" class="absolute top-0 left-0 w-full h-full object-cover object-center" loading="lazy"></iframe>
+      <div class="relative w-full overflow-hidden [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]" style="padding-top: 190%">
+        <iframe 
+          src="https://www.tiktok.com/player/v1/<%= buzz.video_id %>" 
+          allowfullscreen 
+          scrolling="no" 
+          allow="encrypted-media;" 
+          class="absolute top-0 left-0 w-full h-full" 
+          style="-webkit-overflow-scrolling: touch;"
+          loading="lazy">
+        </iframe>
       </div> 
       <div class="mt-4 flex justify-between">
         <div class="flex items-center space-x-1">
