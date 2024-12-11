@@ -24,7 +24,9 @@
         <%= f.password_field :password_confirmation, placeholder: "Password Confirmation", autocomplete: "new-password",  class: "w-full p-3 border border-gray-300 rounded" %>
       </div>
 
-      <%= recaptcha_tags %>
+      <div class="my-3">
+        <div class="cf-turnstile" data-sitekey="<%= Rails.application.credentials.dig(Rails.env.to_sym, :cloudflare, :captcha, :site_key) %>"></div>
+      </div>
 
       <div class="my-3">
         <%= f.submit "Sign up", class: "w-full p-3 text-white bg-blue-600 rounded hover:bg-blue-700" %>
@@ -33,3 +35,4 @@
     <%= render "devise/shared/links" %>
   </div>
 </div>
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>

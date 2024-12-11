@@ -4,7 +4,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # before_action :configure_sign_up_params, only: [:create]
   # before_action :configure_account_update_params, only: [:update]
   before_action :account_update_params, only: [:update]
-  prepend_before_action :check_captcha, only: [:create]
+  prepend_before_action :check_turnstile, only: [:create]
 
   # GET /resource/sign_up
   # def new
@@ -61,26 +61,39 @@ class Users::RegistrationsController < Devise::RegistrationsController
     params.require(:user).permit(:first_name, :last_name, :email, :password, :password_confirmation, :current_password)
   end
 
-  def check_captcha
-    result = verify_recaptcha(secret_key: Rails.application.credentials.dig(Rails.env.to_sym, :google, :recaptcha_secret_key_v2))
-
+  def check_turnstile
+    token = params['cf-turnstile-response']
+    
     if Rails.env.development?
-      Rails.logger.debug "reCAPTCHA result: #{result}"
-      Rails.logger.debug "reCAPTCHA response: #{params['g-recaptcha-response']}" 
+      Rails.logger.debug "Turnstile token: #{token}"
     end
 
-    if !result
+    unless verify_turnstile(token)
       self.resource = resource_class.new sign_up_params
       resource.validate
       set_minimum_password_length
-      flash[:captcha] = "Please click the captcha to prove you're not a robot!"
+      flash[:captcha] = "Please complete the security check!"
       render :new, status: :unprocessable_entity
 
       # Send email notification
       UserMailer.captcha_failed_notification(resource.email).deliver_now
-    else
-      return
     end
+  end
+
+  def verify_turnstile(token)
+    return true if Rails.env.test? # Skip verification in test environment
+
+    uri = URI('https://challenges.cloudflare.com/turnstile/v0/siteverify')
+    secret_key = Rails.application.credentials.dig(Rails.env.to_sym, :cloudflare, :captcha, :secret_key)
+
+    response = Net::HTTP.post_form(uri, {
+      secret: secret_key,
+      response: token,
+      remoteip: request.remote_ip
+    })
+
+    result = JSON.parse(response.body)
+    result['success'] == true
   end
 
   # If you have extra params to permit, append them to the sanitizer.
