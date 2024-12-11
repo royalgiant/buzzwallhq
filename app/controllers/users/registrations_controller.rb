@@ -74,9 +74,6 @@ class Users::RegistrationsController < Devise::RegistrationsController
       set_minimum_password_length
       flash[:captcha] = "Please complete the security check!"
       render :new, status: :unprocessable_entity
-
-      # Send email notification
-      UserMailer.captcha_failed_notification(resource.email).deliver_now
     end
   end
 
