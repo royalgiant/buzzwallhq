@@ -46,6 +46,10 @@ Rails.application.routes.draw do
     post 'data_request', to: 'compliance#data_request'
   end
 
+  namespace :auth do
+    get '/shopify/callback', to: 'shopify#callback'
+  end
+
   # For sidekiq dashboard
   sidekiq_username = Rails.application.credentials.dig(Rails.env.to_sym, :sidekiqweb, :username)
   sidekiq_password = Rails.application.credentials.dig(Rails.env.to_sym, :sidekiqweb, :password)
