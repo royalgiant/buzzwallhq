@@ -17,6 +17,10 @@ class WallsController < ApplicationController
 
 
   def show
+    if params[:embed_token].match?("your_embed_token")
+      render 'embed_token_notice', status: :not_found
+      return
+    end
     response.headers['Content-Security-Policy'] = "frame-ancestors 'self' *"
     @is_subscriber = @wall.user&.role.present?
     if !@wall.user&.role.present? && @wall.user.walls.count >= 1
