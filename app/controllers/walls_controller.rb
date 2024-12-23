@@ -17,7 +17,7 @@ class WallsController < ApplicationController
 
 
   def show
-    if params[:embed_token].match?("your_embed_token")
+    if params[:embed_token].present? && params[:embed_token].match?("your_embed_token")
       render 'embed_token_notice', status: :not_found
       return
     end
