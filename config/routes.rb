@@ -16,6 +16,8 @@ Rails.application.routes.draw do
     get "logout", to: "devise/sessions#destroy"
   end
   
+  # Handle the initial app installation request
+  get '/', to: 'auth/shopify#callback', constraints: ->(request) { request.params[:shop].present? }
   root 'buzz_terms#index'
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 

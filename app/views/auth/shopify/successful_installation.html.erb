@@ -51,20 +51,21 @@
   <div class="container">
     <div class="success-icon">✓</div>
     <h1>Successfully Installed BuzzwallHQ</h1>
-    <p>Thank you for installing BuzzwallHQ! You're just a few steps away from displaying your curated social media reviews.</p>
+    <p>Thank you for installing BuzzwallHQ! Click below to add the reviews section to your theme.</p>
+    
+    <% theme_editor_url = "https://#{@shop_domain}/admin/themes/current/editor?template=index&addSection=BuzzwallHQ%20Reviews" %>
+    
+    <a href="<%= theme_editor_url %>" target="_blank" rel="noopener noreferrer" class="button">Add Reviews Section to Theme</a>
     
     <div class="steps">
       <h2>Next Steps:</h2>
       <ol>
-        <li>Go to your store's theme customizer</li>
-        <li>Add the "BuzzwallHQ Reviews" section to your desired page</li>
+        <li>Click the button above to open your theme editor</li>
+        <li>Click "Add section" in the Template area</li>
+        <li>Look for "BuzzwallHQ Reviews" under the Apps category</li>
         <li>Enter your BuzzwallHQ embed token in the section settings</li>
       </ol>
     </div>
-
-    <p>Need help? Feel free to email <a href="mailto:donald@buzzwallhq.com">us</a> for guidance.</p>
-    
-    <a href="https://admin.shopify.com/themes" class="button">Go to Theme Editor</a>
   </div>
 </body>
 </html>
