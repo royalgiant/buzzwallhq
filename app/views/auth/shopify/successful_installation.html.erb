@@ -45,6 +45,10 @@
       font-weight: 500;
       margin-top: 16px;
     }
+    ol {
+      padding-left: 24px;
+      margin: 16px 0;
+    }
   </style>
 </head>
 <body>
@@ -59,10 +63,11 @@
     
     <div class="steps">
       <h2>Next Steps:</h2>
-      <ol>
+      <ol class="list-decimal">
         <li>Click the button above to open your theme editor</li>
         <li>Click "Add section" in the Template area</li>
         <li>Look for "BuzzwallHQ Reviews" under the Apps category</li>
+        <li>Login and visit your <%= link_to "Walls", walls_path, class:"underline text-blue-600 hover:text-blue-800 visited:text-purple-600", target: "_blank" %> on BuzzwallHQ to create and curate your review wall and to get your wall's embed token</li>
         <li>Enter your BuzzwallHQ embed token in the section settings</li>
       </ol>
     </div>

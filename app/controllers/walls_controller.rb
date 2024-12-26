@@ -21,6 +21,12 @@ class WallsController < ApplicationController
       render 'embed_token_notice', status: :not_found
       return
     end
+
+    unless @wall
+      render 'invalid_token', status: :not_found
+      return
+    end
+    
     response.headers['Content-Security-Policy'] = "frame-ancestors 'self' *"
     @is_subscriber = @wall.user&.role.present?
     if !@wall.user&.role.present? && @wall.user.walls.count >= 1
@@ -75,7 +81,7 @@ class WallsController < ApplicationController
       @wall = if params[:id]
                 Wall.find(params[:id])
               elsif params[:embed_token]
-                Wall.find_by(embed_token: params[:embed_token])
+                Wall.find_by(embed_token: params[:embed_token].strip)
               end
     end
 
