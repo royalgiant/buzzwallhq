@@ -6,7 +6,7 @@
   <p class="order-first font-display text-5xl font-light tracking-tight <%= @text_color.present? && !featured ? @text_color : 'text-white' %>">
     <%= price %>
     <% if product != "FREE" %>
-      <span class="text-base ml-2">ONE TIME</span>
+      <span class="text-base ml-2">PER MONTH</span>
     <% end %>
   </p>
   <ul role="list" class="order-last mt-10 flex flex-col gap-y-3 text-sm <%= featured ? 'text-white' : 'text-gray-500' %>">
@@ -34,12 +34,19 @@
       </div>
     <% end %>
   <% else %>
-    <%= form_tag purchase_checkouts_path,  method: :post, data: { turbo: false } do %>
-      <input type="hidden" name="mode" value="checkout" />
-      <input type="hidden" name="price_id" value="<%= Rails.application.credentials.dig(Rails.env.to_sym, :stripe, :pricing, product) %>" />
-      <div class="mt-10">
-        <%= submit_tag "Get Started", data: { disable_with: "Hold please..." }, class: "cursor-pointer mt-8 w-full rounded-full #{featured ? 'bg-white text-gray-900 hover:bg-gray-200' : 'bg-gray-900 text-white border border-gray-700 hover:border-gray-600'} px-3 py-3 text-sm font-semibold" %>
-      </div>
+    <% if current_user.present? && current_user&.subscribed? %>
+        <div class="text-center mb-6">
+          <div class="mt-10">
+            <%= button_to("Manage billing", billings_path, data: {turbo: false}, class: "cursor-pointer mt-8 w-full rounded-full #{featured ? 'bg-white text-gray-900 hover:bg-gray-200' : 'bg-gray-900 text-white border border-gray-700 hover:border-gray-600'} px-3 py-3 text-sm font-semibold") %>
+          </div>
+        </div>
+    <% else %>
+      <%= form_tag purchase_checkouts_path,  method: :post, data: { turbo: false } do %>
+        <input type="hidden" name="price_id" value="<%= Rails.application.credentials.dig(Rails.env.to_sym, :stripe, :pricing, product) %>" />
+        <div class="mt-10">
+          <%= submit_tag "Get Started", data: { disable_with: "Hold please..." }, class: "cursor-pointer mt-8 w-full rounded-full #{featured ? 'bg-white text-gray-900 hover:bg-gray-200' : 'bg-gray-900 text-white border border-gray-700 hover:border-gray-600'} px-3 py-3 text-sm font-semibold" %>
+        </div>
+      <% end %>
     <% end %>
   <% end %>
   <div class="mt-6 text-center">

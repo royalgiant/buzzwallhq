@@ -32,9 +32,9 @@ class BuzzTermsController < ApplicationController
 
     respond_to do |format|
       if (!current_user&.role.present? && current_user.buzz_terms.count >= 2) || 
-        (current_user&.role.present? && current_user&.role == User::LIFETIME_STARTER && current_user.buzz_terms.count >= 10) ||
-        (current_user&.role.present? && current_user&.role == User::LIFETIME_LAUNCH && current_user.buzz_terms.count >= 50) ||
-        (current_user&.role.present? && current_user&.role == User::LIFETIME_GROW && current_user.buzz_terms.count >= 100)
+        (current_user&.role.present? && current_user&.role == User::STARTER && current_user.buzz_terms.count >= 10) ||
+        (current_user&.role.present? && current_user&.role == User::LAUNCH && current_user.buzz_terms.count >= 50) ||
+        (current_user&.role.present? && current_user&.role == User::GROW && current_user.buzz_terms.count >= 100)
         format.html { redirect_to new_buzz_term_path, notice: "You have exceeded the number of keywords tracked. If you would like more, please subscribe or upgrade your plan!" }
       elsif @buzz_term.save
         get_initial_buzzes(@buzz_term)

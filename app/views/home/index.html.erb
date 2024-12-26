@@ -26,9 +26,6 @@
     <h2 class="font-display text-3xl tracking-tight text-white sm:text-4xl">
       Simple pricing, no subscriptions for early adopters.
     </h2>
-    <p class="mt-4 text-lg text-gray-500">
-      🎁 All plans are currently 30% off for the first 50 customers 
-    </p>
   </div>
    <div class="container mt-16 grid grid-cols-1 gap-y-10 sm:mx-auto lg:-mx-8 lg:max-w-7xl lg:grid-cols-4 xl:mx-auto xl:gap-x-8">
         <%= render 'plan', name: "FREE FOREVER", price: "FREE", price_id: ENV['STARTER_PRICE'],
@@ -50,7 +47,7 @@
           product: "FREE",
           featured: false %>
 
-        <%= render 'plan', name: "Starter", price: "$129", price_id: ENV['STARTER_PRICE'],
+        <%= render 'plan', name: "Starter", price: "$10", price_id: Rails.application.credentials.dig(Rails.env.to_sym, :stripe, :pricing, :starter_price),
           description: "For the individual who is just getting started.",
           features: [
             'Unlimited Buzz Walls',
@@ -69,7 +66,7 @@
           product: :starter_price,
           featured: false %>
       
-      <%= render 'plan', name: "Launch", price: "$199", price_id: ENV['LAUNCH_PRICE'],
+      <%= render 'plan', name: "Launch", price: "$20", price_id: ENV['LAUNCH_PRICE'],
           description: "Perfect for startups, small, and medium sized businesses.",
           features: [
             'Unlimited Buzz Walls',
@@ -88,7 +85,7 @@
           product: :launch_price,
           featured: true %>
       
-      <%= render 'plan', name: "Grow", price: "$249", price_id: ENV['GROW_PRICE'],
+      <%= render 'plan', name: "Grow", price: "$40", price_id: ENV['GROW_PRICE'],
           description: "For the biggest companies with multiple products and services.",
           features: [
             'Unlimited Buzz Walls',

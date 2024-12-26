@@ -1,6 +1,6 @@
 
 <div class="container my-8 grid grid-cols-1 gap-y-10 sm:mx-auto lg:-mx-8 lg:max-w-7xl lg:grid-cols-3 xl:mx-auto xl:gap-x-8">
-  <%= render 'home/plan', name: "Starter", price: "$129", price_id: ENV['STARTER_PRICE'],
+  <%= render 'home/plan', name: "Starter", price: "$10", price_id: Rails.application.credentials.dig(Rails.env.to_sym, :stripe, :pricing, :starter_price),
       description: "For the individual who is just getting started with their side hustle.",
       features: [
         'Unlimited Buzz Walls',
@@ -19,7 +19,7 @@
       product: :starter_price,
       featured: false %>
   
-  <%= render 'home/plan', name: "Launch", price: "$199", price_id: ENV['LAUNCH_PRICE'],
+  <%= render 'home/plan', name: "Launch", price: "$20", price_id: ENV['LAUNCH_PRICE'],
       description: "Perfect for startups, small, and medium sized businesses.",
       features: [
         'Unlimited Buzz Walls',
@@ -38,7 +38,7 @@
       product: :launch_price,
       featured: true %>
   
-  <%= render 'home/plan', name: "Grow", price: "$249", price_id: ENV['GROW_PRICE'],
+  <%= render 'home/plan', name: "Grow", price: "$40", price_id: ENV['GROW_PRICE'],
       description: "For the biggest companies with multiple products and services.",
       features: [
         'Unlimited Buzz Walls',

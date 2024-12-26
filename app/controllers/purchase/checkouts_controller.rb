@@ -1,5 +1,6 @@
 # app/controllers/purchase/checkouts_controller.rb
 class Purchase::CheckoutsController < ApplicationController
+  before_action :authenticate_user!
   def create
     price = params[:price_id] # passed in via the hidden field in pricing.html.erb
     mode = params[:mode]
@@ -28,6 +29,7 @@ class Purchase::CheckoutsController < ApplicationController
         cancel_url: get_payment_cancel_url(mode),
         payment_method_types: ['card'],
         mode: 'payment',
+        customer_email: current_user.email,
         line_items: [{
           quantity: 1,
           price: price,
@@ -40,15 +42,15 @@ class Purchase::CheckoutsController < ApplicationController
 
   def success
     @session = Stripe::Checkout::Session.retrieve(params[:session_id])
-    if (@session.amount_total == 12900 || @session.amount_total == 19900 || @session.amount_total == 24900)
+    if (@session.amount_total == 1000 || @session.amount_total == 2000 || @session.amount_total == 4000)
       user = User.find_or_initialize_by(email: @session.customer_email || @session.customer_details["email"])
       case @session.amount_total
-      when 12900
-        user.role = User::LIFETIME_STARTER
-      when 19900
-        user.role = User::LIFETIME_LAUNCH
-      when 24900
-        user.role = User::LIFETIME_GROW
+      when 1000
+        user.role = User::STARTER
+      when 2000
+        user.role = User::LAUNCH
+      when 4000
+        user.role = User::GROW
       end
       user.save(validate: false)
     end

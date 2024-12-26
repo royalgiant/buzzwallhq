@@ -12,10 +12,11 @@ class User < ApplicationRecord
 
   has_many :buzz_terms, dependent: :destroy
   has_many :walls, dependent: :destroy
+  has_many :subscriptions, dependent: :destroy
 
-  LIFETIME_STARTER = "lifetime_starter".freeze
-  LIFETIME_LAUNCH = "lifetime_launch".freeze
-  LIFETIME_GROW = "lifetime_grow".freeze
+  STARTER = "starter".freeze
+  LAUNCH = "launch".freeze
+  GROW = "grow".freeze
   ADMIN = "admin".freeze
 
   def self.from_omniauth(auth)
@@ -29,6 +30,16 @@ class User < ApplicationRecord
       user.skip_confirmation!
       user.skip_validation = true
     end
+  end
+
+  def subscribed?
+    subscriptions.where(status: ["active", "trailing"]).any? do |subscription|
+      Time.now <= subscription.current_period_end
+    end
+  end
+
+  def is_admin?
+    self.role == ADMIN
   end
          
 end

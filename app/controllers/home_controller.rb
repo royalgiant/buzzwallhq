@@ -40,12 +40,6 @@ class HomeController < ApplicationController
       {
         question: "What's the difference between Basic and Advanced Reviews Tracking",
         answer: "BuzzwallHQ's AI recommendation on who you should reach out to for sponsorship/collaborations + future tracking features are included in advanced. Basic will only ever track review performance.",
-      },
-      {
-        question:
-          'What is the 30% lifetime discount?',
-        answer:
-          "We're offering our first 50 customers a 30% lifetime discount off our launch price as a thank you for the early support! You will be grandfathered into these prices forever.",
       }
   ]
   end

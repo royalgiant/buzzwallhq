@@ -47,6 +47,9 @@ Rails.application.routes.draw do
     post 'customer_redacted', to: 'compliance#customer_redacted'
     post 'data_request', to: 'compliance#data_request'
   end
+  resources :webhooks, only: :create
+  resources :subscriptions
+  resources :billings, only: :create
 
   namespace :auth do
     get '/shopify/callback', to: 'shopify#callback'
