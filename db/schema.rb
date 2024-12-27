@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_12_27_020039) do
+ActiveRecord::Schema[7.1].define(version: 2024_12_27_162913) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -51,6 +51,18 @@ ActiveRecord::Schema[7.1].define(version: 2024_12_27_020039) do
     t.index ["buzz_id"], name: "index_buzzes_walls_on_buzz_id"
     t.index ["wall_id", "buzz_id"], name: "index_buzzes_walls_on_wall_id_and_buzz_id"
     t.index ["wall_id"], name: "index_buzzes_walls_on_wall_id"
+  end
+
+  create_table "shopify_shops", force: :cascade do |t|
+    t.string "shopify_domain"
+    t.string "shopify_access_token"
+    t.string "shopify_gid"
+    t.string "shopify_email"
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["shopify_gid"], name: "index_shopify_shops_on_shopify_gid"
+    t.index ["user_id"], name: "index_shopify_shops_on_user_id"
   end
 
   create_table "subscriptions", force: :cascade do |t|
@@ -113,6 +125,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_12_27_020039) do
   add_foreign_key "buzzes", "users"
   add_foreign_key "buzzes_walls", "buzzes"
   add_foreign_key "buzzes_walls", "walls"
+  add_foreign_key "shopify_shops", "users", on_delete: :cascade
   add_foreign_key "subscriptions", "users"
   add_foreign_key "walls", "buzz_terms"
   add_foreign_key "walls", "users"

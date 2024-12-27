@@ -13,6 +13,7 @@ class User < ApplicationRecord
   has_many :buzz_terms, dependent: :destroy
   has_many :walls, dependent: :destroy
   has_many :subscriptions, dependent: :destroy
+  has_many :shopify_shops, dependent: :destroy
 
   STARTER = "starter".freeze
   LAUNCH = "launch".freeze

@@ -6,18 +6,38 @@ module Auth
       if @shop_domain.present?
         begin
           Rails.logger.info "Starting token exchange for shop: #{@shop_domain}"
-          access_token = get_access_token(@shop_domain)
+          access_token = get_shopify_access_token(@shop_domain)
           Rails.logger.info "Got access token: #{access_token}"
-          
+          shop = ShopifyShop.find_or_initialize_by(shopify_domain: @shop_domain)
+
           # Then use this access token for API calls
           session = ShopifyAPI::Auth::Session.new(
             shop: @shop_domain,
             access_token: access_token
           )
 
+          graphql_client = ShopifyAPI::Clients::Graphql::Admin.new(session: session)
+
+          query = <<~GRAPHQL
+            {
+              shop {
+                id
+                email
+                contactEmail
+              }
+            }
+          GRAPHQL
+          response = graphql_client.query(query: query) 
+          shop_data = response.body["data"]["shop"]
+          shop.update!(
+            shopify_access_token: access_token,
+            shopify_gid: shop_data["id"],
+            shopify_email: shop_data["contactEmail"] || shop_data["email"]
+          )
+
           client = ShopifyAPI::Clients::Rest::Admin.new(session: session)
           
-          webhook_url = "https://engaged-dane-accepted.ngrok-free.app/webhooks/shopify"
+          webhook_url = "#{Rails.env.development? ? 'https://engaged-dane-accepted.ngrok-free.app' : 'https://buzzwallhq.com'}/webhooks/shopify"
 
           ['app_subscriptions/create', 'app_subscriptions/update', 'app_subscriptions/approaching_capped_amount'].each do |topic|
             begin
@@ -49,7 +69,7 @@ module Auth
 
     private
 
-    def get_access_token(shop_domain)
+    def get_shopify_access_token(shop_domain)
       client_id = Rails.application.credentials.dig(Rails.env.to_sym, :shopify, :api_key)
       client_secret = Rails.application.credentials.dig(Rails.env.to_sym, :shopify, :api_secret)
     

@@ -1,6 +1,5 @@
 class WebhooksController < ApplicationController
   skip_before_action :verify_authenticity_token
-  before_action :verify_shopify_webhook, only: :shopify
 
   def create
     # docs: https://stripe.com/docs/payments/checkout/fulfill-orders
@@ -82,98 +81,64 @@ class WebhooksController < ApplicationController
 
   def shopify
     webhook_payload = JSON.parse(request.body.read)
+    app_subscription = webhook_payload["app_subscription"]
     
-    case request.headers['X-Shopify-Topic']
-    when 'app/subscriptions/update'
-      handle_shopify_subscription_update(webhook_payload)
-    when 'app/subscriptions/create'
-      handle_shopify_subscription_create(webhook_payload)
-    when 'app/subscriptions/cancel'
-      handle_shopify_subscription_cancel(webhook_payload)
+    if app_subscription["status"] == "ACTIVE"
+      shop = ShopifyShop.find_by(shopify_gid: app_subscription["admin_graphql_api_shop_id"])
+      user = User.find_by(email: shop.shopify_email)
+      
+      created_at = Time.parse(app_subscription["created_at"])
+   
+      subscription = Subscription.find_or_initialize_by(
+        subscription_id: app_subscription["admin_graphql_api_id"]
+      )
+      
+      period_start = created_at
+      period_end = created_at + 1.month
+      
+      if subscription.new_record?
+        # New subscription gets 7 day trial
+        period_start = created_at + 7.days
+        period_end = created_at + 37.days
+        
+        # Create user if doesn't exist
+        unless user
+          temp_password = SecureRandom.hex(10)
+          user = User.new(
+            email: shop.shopify_email,
+            password: temp_password,
+            first_name: shop.shopify_email.split('@').first,
+            last_name: 'Store',
+            skip_validation: true,
+            role: determine_role_from_plan(app_subscription["name"])
+          )
+          user.skip_confirmation!
+          user.save!
+          shop.update(user: user)
+          
+          UserMailer.with(user: user, temp_password: temp_password).shopify_welcome.deliver_later
+          UserMailer.with(user: user, temp_password: temp_password).shopify_password.deliver_later
+        end
+      else
+        user&.update(role: determine_role_from_plan(app_subscription["name"]))
+      end
+   
+      subscription.update!(
+        user: user,
+        customer_id: app_subscription["admin_graphql_api_shop_id"], 
+        plan_id: app_subscription["name"].downcase,
+        status: 'active',
+        interval: 'month',
+        current_period_start: period_start,
+        current_period_end: period_end,
+        source: 'shopify'
+      )
     end
-
+  
     render json: { message: 'Success' }, status: :ok
-  end
+  end  
 
   private
-
-  def verify_shopify_webhook
-    shopify_hmac = request.headers['X-Shopify-Hmac-Sha256']
-    webhook_payload = request.body.read
-    calculated_hmac = Base64.strict_encode64(OpenSSL::HMAC.digest('sha256', Rails.application.credentials[Rails.env.to_sym].dig(:shopify, :api_secret), webhook_payload))
-    
-    unless ActiveSupport::SecurityUtils.secure_compare(calculated_hmac, shopify_hmac)
-      head :unauthorized
-      return
-    end
-    
-    request.body.rewind
-  end
-
-  def handle_shopify_subscription_create(payload)
-    # Generate store name from domain
-    shop_domain = payload['shop_domain']
-    store_name = shop_domain.split('.')[0]
-    
-    # Generate temporary password
-    temp_password = SecureRandom.hex(10)
-    
-    # Create user with validation skipping
-    user = User.new(
-      email: "#{store_name}@#{shop_domain}",
-      password: temp_password,
-      first_name: store_name.titleize,
-      last_name: 'Store',
-      skip_validation: true,
-      role: determine_role_from_plan(payload['plan_id'])
-    )
-    
-    # Skip email confirmation for Shopify users
-    user.skip_confirmation!
-    user.save!
-
-    # Create subscription
-    Subscription.create!(
-      user: user,
-      subscription_id: payload['subscription_id'],
-      customer_id: payload['shop_id'],
-      plan_id: payload['plan_id'],
-      status: 'active',
-      interval: payload['billing_interval'],
-      current_period_start: Time.current,
-      current_period_end: payload['billing_on'],
-      source: 'shopify'
-    )
-
-    # Send welcome email with credentials
-    UserMailer.with(
-      user: user,
-      temp_password: temp_password
-    ).shopify_welcome.deliver_later
-
-    # Send password in separate email for security
-    UserMailer.with(
-      user: user,
-      temp_password: temp_password
-    ).shopify_password.deliver_later
-  end
-
-  def handle_shopify_subscription_update(payload)
-    subscription = Subscription.find_by(subscription_id: payload['subscription_id'])
-    return unless subscription.present?
-
-    subscription.update(
-      status: payload['status'],
-      current_period_end: payload['billing_on']
-    )
-  end
-
-  def handle_shopify_subscription_cancel(payload)
-    subscription = Subscription.find_by(subscription_id: payload['subscription_id'])
-    return unless subscription.present?
-
-    subscription.update(status: 'cancelled')
-  end
 
   def fullfill_order(checkout_session)
     # Find user and assign customer id from Stripe
@@ -196,17 +161,16 @@ class WebhooksController < ApplicationController
     )
   end
 
-  def determine_role_from_plan(plan_id)
-    # Add your Shopify plan IDs here
-    case plan_id
-    when '143497' # Starter
+  def determine_role_from_plan(plan_name)
+    case plan_name
+    when "Starter"
       User::STARTER
-    when '143498' # Launch
+    when "Launch"
       User::LAUNCH
-    when '143499' # Grow
+    when "Grow"
       User::GROW
     else
-      nil
+      User::STARTER  # Default to starter if plan isn't recognized
     end
   end
 end
