@@ -199,11 +199,11 @@ class WebhooksController < ApplicationController
   def determine_role_from_plan(plan_id)
     # Add your Shopify plan IDs here
     case plan_id
-    when '143497'  # Replace with your actual Shopify plan ID
+    when '143497' # Starter
       User::STARTER
-    when '143498'   # Replace with your actual Shopify plan ID
+    when '143498' # Launch
       User::LAUNCH
-    when '143499'     # Replace with your actual Shopify plan ID
+    when '143499' # Grow
       User::GROW
     else
       nil

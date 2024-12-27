@@ -11,7 +11,7 @@ gem 'devise' # for user authentication
 gem 'omniauth'
 gem 'omniauth-google-oauth2'
 gem 'omniauth-rails_csrf_protection', "~> 1.0"
-gem "recaptcha"
+gem 'shopify_api'
 gem 'select2-rails'
 gem 'kamal'
 

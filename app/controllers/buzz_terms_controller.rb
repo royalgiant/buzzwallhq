@@ -31,10 +31,11 @@ class BuzzTermsController < ApplicationController
     @buzz_term = BuzzTerm.new(buzz_term_params.merge({user_id: current_user.id, frequency_check: get_frequency_check}))
 
     respond_to do |format|
-      if (!current_user&.role.present? && current_user.buzz_terms.count >= 2) || 
+      if ((!current_user&.role.present? && current_user.buzz_terms.count >= 2) || 
         (current_user&.role.present? && current_user&.role == User::STARTER && current_user.buzz_terms.count >= 10) ||
         (current_user&.role.present? && current_user&.role == User::LAUNCH && current_user.buzz_terms.count >= 50) ||
-        (current_user&.role.present? && current_user&.role == User::GROW && current_user.buzz_terms.count >= 100)
+        (current_user&.role.present? && current_user&.role == User::GROW && current_user.buzz_terms.count >= 100)) &&
+        (!current_user.subscribed? || !current_user&.is_admin?)
         format.html { redirect_to new_buzz_term_path, notice: "You have exceeded the number of keywords tracked. If you would like more, please subscribe or upgrade your plan!" }
       elsif @buzz_term.save
         get_initial_buzzes(@buzz_term)
