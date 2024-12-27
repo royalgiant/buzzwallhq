@@ -20,5 +20,6 @@ module BuzzwallHQ
     # config.eager_load_paths << Rails.root.join("extras")
     config.autoload_paths << Rails.root.join('lib')
     config.active_job.queue_adapter = :sidekiq
+    config.active_support.cache_format_version = 7.0
   end
 end

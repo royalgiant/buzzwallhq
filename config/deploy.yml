@@ -23,6 +23,8 @@ servers:
       secret:
         - REDIS_URL
         - REDIS_PASSWORD
+        - SHOPIFY_API_KEY
+        - SHOPIFY_API_SECRET
 
 # Enable SSL auto certification via Let's Encrypt (and allow for multiple apps on one server).
 # If using something like Cloudflare, it is recommended to set encryption mode 
@@ -54,6 +56,8 @@ env:
     - RAILS_ENV
     - REDIS_URL
     - REDIS_PASSWORD
+    - SHOPIFY_API_KEY
+    - SHOPIFY_API_SECRET
 
 # Aliases are triggered with "bin/kamal <alias>". You can overwrite arguments on invocation:
 # "bin/kamal logs -r job" will tail logs from the first server in the job section.
