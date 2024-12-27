@@ -47,7 +47,7 @@
           product: "FREE",
           featured: false %>
 
-        <%= render 'plan', name: "Starter", price: "$10", price_id: Rails.application.credentials.dig(Rails.env.to_sym, :stripe, :pricing, :starter_price),
+        <%= render 'plan', name: "Starter, w/ 7-day trial", price: "$10", price_id: Rails.application.credentials.dig(Rails.env.to_sym, :stripe, :pricing, :starter_price),
           description: "For the individual who is just getting started.",
           features: [
             'Unlimited Buzz Walls',
@@ -66,7 +66,7 @@
           product: :starter_price,
           featured: false %>
       
-      <%= render 'plan', name: "Launch", price: "$20", price_id: ENV['LAUNCH_PRICE'],
+      <%= render 'plan', name: "Launch, w/ 7-day trial", price: "$20", price_id: ENV['LAUNCH_PRICE'],
           description: "Perfect for startups, small, and medium sized businesses.",
           features: [
             'Unlimited Buzz Walls',
@@ -85,7 +85,7 @@
           product: :launch_price,
           featured: true %>
       
-      <%= render 'plan', name: "Grow", price: "$40", price_id: ENV['GROW_PRICE'],
+      <%= render 'plan', name: "Grow, w/ 7-day trial", price: "$40", price_id: ENV['GROW_PRICE'],
           description: "For the biggest companies with multiple products and services.",
           features: [
             'Unlimited Buzz Walls',
