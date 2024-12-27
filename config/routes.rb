@@ -50,6 +50,7 @@ Rails.application.routes.draw do
   resources :webhooks, only: :create
   resources :subscriptions
   resources :billings, only: :create
+  post '/webhooks/shopify', to: 'webhooks#shopify'
 
   namespace :auth do
     get '/shopify/callback', to: 'shopify#callback'

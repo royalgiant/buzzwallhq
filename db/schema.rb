@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_12_26_205345) do
+ActiveRecord::Schema[7.1].define(version: 2024_12_27_020039) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -64,6 +64,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_12_26_205345) do
     t.datetime "current_period_start"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "source", default: "stripe"
+    t.index ["source"], name: "index_subscriptions_on_source"
     t.index ["user_id"], name: "index_subscriptions_on_user_id"
   end
 
