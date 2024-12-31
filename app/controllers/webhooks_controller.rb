@@ -110,7 +110,8 @@ class WebhooksController < ApplicationController
             first_name: shop.shopify_email.split('@').first,
             last_name: 'Store',
             skip_validation: true,
-            role: determine_role_from_plan(app_subscription["name"])
+            role: determine_role_from_plan(app_subscription["name"]),
+            account_type: User::SHOPIFY_TYPE
           )
           user.skip_confirmation!
           user.save!
@@ -120,7 +121,7 @@ class WebhooksController < ApplicationController
           UserMailer.with(user: user, temp_password: temp_password).shopify_password.deliver_later
         end
       else
-        user&.update(role: determine_role_from_plan(app_subscription["name"]))
+        user&.update(role: determine_role_from_plan(app_subscription["name"]), account_type: User::SHOPIFY_TYPE)
       end
    
       subscription.update!(
@@ -131,7 +132,7 @@ class WebhooksController < ApplicationController
         interval: 'month',
         current_period_start: period_start,
         current_period_end: period_end,
-        source: 'shopify'
+        source: User::SHOPIFY_TYPE
       )
     end
   
@@ -143,7 +144,7 @@ class WebhooksController < ApplicationController
   def fullfill_order(checkout_session)
     # Find user and assign customer id from Stripe
     user = User.find(checkout_session.client_reference_id)
-    user.update(stripe_id: checkout_session.customer)
+    user.update(stripe_id: checkout_session.customer, account_type: User::STRIPE_TYPE)
 
     # Retrieve new subscription via Stripe API using susbscription id
     stripe_subscription = Stripe::Subscription.retrieve(checkout_session.subscription)

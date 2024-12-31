@@ -23,7 +23,9 @@
               <%= link_to "Buzzes", buzzes_path, class: "text-gray-300 hover:text-white rounded-md px-3 py-2 text-sm font-medium #{'text-white rounded-md px-3 py-2 text-sm font-medium' if current_page?(buzzes_path)}" %>
               <%= link_to "Buzz Terms", buzz_terms_path, class: "text-gray-300 hover:text-white rounded-md px-3 py-2 text-sm font-medium #{'text-white rounded-md px-3 py-2 text-sm font-medium' if current_page?(buzz_terms_path)}" %>
               <%= link_to "Walls", walls_path, class: "text-gray-300 hover:text-white rounded-md px-3 py-2 text-sm font-medium #{'text-white rounded-md px-3 py-2 text-sm font-medium' if current_page?(walls_path)}" %>
-              <%= link_to is_admin_or_subscribed? ? "Manage Subscription" : "Pricing", pricing_path, class: "text-gray-300 hover:text-white rounded-md px-3 py-2 text-sm font-medium #{'text-white rounded-md px-3 py-2 text-sm font-medium' if current_page?(pricing_path)}" %>
+              <% if current_user.account_type != User::SHOPIFY_TYPE %>
+                <%= link_to is_admin_or_subscribed? ? "Manage Subscription" : "Pricing", pricing_path, class: "text-gray-300 hover:text-white rounded-md px-3 py-2 text-sm font-medium #{'text-white rounded-md px-3 py-2 text-sm font-medium' if current_page?(pricing_path)}" %>
+              <% end %>
             </div>
           </div>
         </div>
@@ -64,8 +66,8 @@
         <%= link_to "Buzzes", buzzes_path, class: "block rounded-md px-3 py-2 text-base font-medium #{current_page?(buzzes_path) ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white'}" %>
         <%= link_to "Buzz Terms", buzz_terms_path, class: "block rounded-md px-3 py-2 text-base font-medium #{current_page?(buzz_terms_path) ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white'}" %>
         <%= link_to "Walls", walls_path, class: "block rounded-md px-3 py-2 text-base font-medium #{current_page?(walls_path) ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white'}" %>
-        <% if current_user&.role.nil? %>
-          <%= link_to "Pricing", pricing_path, class: "block rounded-md px-3 py-2 text-base font-medium #{current_page?(pricing_path) ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white'}" %>
+        <% if current_user.account_type != User::SHOPIFY_TYPE %>
+          <%= link_to is_admin_or_subscribed? ? "Manage Subscription" : "Pricing", pricing_path, class: "block rounded-md px-3 py-2 text-base font-medium #{current_page?(pricing_path) ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white'}" %>
         <% end %>
       </div>
     </div>

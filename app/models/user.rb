@@ -19,6 +19,8 @@ class User < ApplicationRecord
   LAUNCH = "launch".freeze
   GROW = "grow".freeze
   ADMIN = "admin".freeze
+  SHOPIFY_TYPE = "shopify".freeze
+  STRIPE_TYPE = "stripe".freeze
 
   def self.from_omniauth(auth)
     where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
